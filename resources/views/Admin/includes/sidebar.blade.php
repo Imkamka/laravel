@@ -5,12 +5,13 @@
             <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
             <!-- start -->
             <li class="item mb-3">
-                <div href="#" class="nav_link submenu_item">
+                <a href="{{ route('view.dashboard') }}"
+                    class="nav_link {{ Route::is('view.dashboard') ? 'active' : ' ' }}">
                     <span class="navlink_icon">
                         <i class="bx bx-grid-alt"></i>
                     </span>
                     <span class="navlink">Dashboard</span>
-                </div>
+                </a>
 
 
             </li>
@@ -19,12 +20,13 @@
             <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
             <!-- start -->
             <li class="item mb-3">
-                <div href="#" class="nav_link submenu_item">
+                <a href="{{ route('view.purchase') }}"
+                    class="nav_link {{ Route::is('view.purchase') ? 'active' : ' ' }}">
                     <span class="navlink_icon">
                         <i class='bx bxs-dollar-circle'></i>
                     </span>
                     <span class="navlink">Purchases</span>
-                </div>
+                </a>
 
 
             </li>
@@ -32,9 +34,9 @@
 
             <!-- duplicate these li tag if you want to add or remove navlink only -->
             <!-- Start -->
-            <li class="item mb-3">
-                <a href="#" class="nav_link">
-                    <span class="navlink_icon">
+            <li class="item mb-3 ">
+                <a href="{{ route('view.sales') }}" class="nav_link {{ Route::is('view.sales') ? 'active' : ' ' }}">
+                    <span class="navlink_icon ">
                         <i class='bx bx-line-chart'></i>
                     </span>
                     <span class="navlink">Sales</span>

@@ -19,8 +19,6 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
 
-
-
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 </head>
@@ -31,7 +29,7 @@
     @include('Admin.includes.navbar')
     @include('Admin.includes.sidebar')
 
-    <div class="main-panel p-4">
+    <div class="main-panel p-4 ">
         @yield('content')
     </div>
     </div>
@@ -40,7 +38,8 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}" defer></script>
+
 
 </body>
 

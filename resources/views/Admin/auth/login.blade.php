@@ -69,7 +69,7 @@
                             </a>
                         </div>
                         <div class="input-fields">
-                            <button class="btn btn-primary btn-block p-2">Sign In</button>
+                            <button class="btn btn-primary btn-block p-2 sign-in">Sign In</button>
                         </div>
                     </div>
                 </div>
