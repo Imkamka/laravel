@@ -10,4 +10,8 @@ class SaleController extends Controller
     {
         return view('Admin.sales');
     }
+    public function showStock()
+    {
+        return view('Admin.stock-details');
+    }
 }

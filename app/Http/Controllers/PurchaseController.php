@@ -10,4 +10,8 @@ class PurchaseController extends Controller
     {
         return view('Admin.purchases');
     }
+    public function showAmount()
+    {
+        return view('Admin.amount-receivable');
+    }
 }

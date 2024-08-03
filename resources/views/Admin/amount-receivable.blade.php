@@ -63,5 +63,51 @@
             </div>
 
         </div>
+        {{-- Sales tables layout  --}}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive shadow">
+                    <div class="row p-2 stock-detail">
+                        <div class="col-auto me-auto mb-3">
+                            <h3 class="page-title">
+                                Amount receivable
+                            </h3>
+                        </div>
+
+                    </div>
+                    <table class="table table-responsive table-responsive-xl w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="2%">Customer</th>
+                                <th scope="col" width="2%">Phone no.</th>
+                                <th scope="col" width="2%">Amount</th>
+                                <th scope="col" width="2%">Payment</th>
+                                <th scope="col" width="2%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i <= 7; $i++)
+                                <tr>
+                                    <td>Moin Khan</td>
+                                    <td><span>+92 3706767071</span></td>
+
+                                    <td>2600.00 PKR</td>
+                                    <td class="text-danger">Later on</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#amount-details">View more</button>
+                                    </td>
+
+                                </tr>
+                            @endfor
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
     </div>
+    @include('Admin.receivable-details')
 @endsection

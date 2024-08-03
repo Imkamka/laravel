@@ -63,5 +63,54 @@
             </div>
 
         </div>
+        {{-- Sales tables layout  --}}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive shadow">
+                    <div class="row p-2 stock-detail">
+                        <div class="col-auto me-auto mb-3">
+                            <h3 class="page-title">
+                                Stock details
+                            </h3>
+                        </div>
+                        <div class="col-auto mb-4">
+                            <button class=" btn btn-outline-primary btn-sm">View all</button>
+                        </div>
+                    </div>
+                    <table class="table table-responsive table-responsive-xl w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="4%">Image</th>
+                                <th scope="col" width="4%">Item name</th>
+                                <th scope="col" width="4%">Type</th>
+                                <th scope="col" width="4%">Date-Time</th>
+                                <th scope="col" width="4%">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i <= 7; $i++)
+                                <tr>
+                                    <td class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/image/bg.jpeg') }}" alt="" width="40px"
+                                            height="40px">
+                                    </td>
+                                    <td><span>Markotto89</span></td>
+
+                                    <td>
+                                        Cow Feed
+                                    </td>
+                                    <td>12 May 2024-2:00AM</td>
+                                    <td>2600.00 PKR</td>
+
+                                </tr>
+                            @endfor
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

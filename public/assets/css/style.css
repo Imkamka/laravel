@@ -537,6 +537,58 @@ body.dark {
     color: rgb(130, 130, 130);
 }
 
+.table-responsive .stock-detail .page-title {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+table thead tr th {
+    color: #0A06F4 !important;
+}
+
+.modal .modal-content .modal-header {
+    border: none;
+    width: 100%;
+}
+
+.modal .modal-content .modal-header .modal-title {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.modal-body .container .client-detail span {
+    font-size: 15px;
+    font-weight: 200;
+    color: #c9c9c9;
+}
+
+.modal-body .container {
+    margin-top: -40px;
+}
+
+.modal-body .container .client-detail h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.container-fluid .row .stock-detail h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.modal .modal-body .container-fluid {
+    margin-top: -35px;
+}
+
+.container-fluid .row .stock-detail small {
+    font-size: 12px;
+    font-weight: 200;
+    color: #c9c9c9;
+}
+
 /* dashboard cards layout media query css  */
 @media screen and (max-width: 990px) {
     .row .d-card {
