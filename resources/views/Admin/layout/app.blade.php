@@ -7,8 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rafay diaries and farms</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+
 
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -17,20 +27,21 @@
 
 <body>
 
-    <div class="wrapper d-flex align-items-stretch">
-        @include('Admin.includes.sidebar')
-        <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5">
-            @include('Admin.includes.navbar')
 
-            @yield('content')
-        </div>
+    @include('Admin.includes.navbar')
+    @include('Admin.includes.sidebar')
+
+    <div class="main-panel p-4">
+        @yield('content')
+    </div>
+    </div>
     </div>
 
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
 </body>
 
 </html>
