@@ -589,11 +589,57 @@ table thead tr th {
     color: #c9c9c9;
 }
 
+/* landing page modifications  */
+
+.landing-page ul {
+    padding-left: 30px;
+}
+
+.landing-page ul li {
+    padding-left: 30px;
+}
+
+.page-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #0c0b0b;
+    color: white;
+}
+
+.page-container .page-content {
+    position: relative;
+    height: 100vh;
+    top: 86px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-container .page-content .row {
+    display: flex;
+    justify-content: center;
+}
+
+.page-container .page-content .row .card {
+    background: transparent;
+    color: white !important;
+    width: 50%;
+}
+
 /* dashboard cards layout media query css  */
 @media screen and (max-width: 990px) {
     .row .d-card {
         width: 100%;
         justify-content: center;
+    }
+
+    .landing-page ul li,
+    .landing-action {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 

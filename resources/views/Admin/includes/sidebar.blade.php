@@ -81,12 +81,15 @@
             <hr>
 
             <li class="item mb-3 mt-5">
-                <a href="#" class="nav_link">
-                    <span class="navlink_icon">
-                        <i class="bx bx-cog"></i>
-                    </span>
-                    <span class="navlink">Setting</span>
-                </a>
+                @auth
+                    <a href="{{ route('auth.logout') }}" class="nav_link">
+                        <span class="navlink_icon">
+                            <i class='bx bx-log-out-circle'></i>
+                        </span>
+                        <span class="navlink">Logout</span>
+
+                    </a>
+                @endauth
             </li>
         </ul>
 

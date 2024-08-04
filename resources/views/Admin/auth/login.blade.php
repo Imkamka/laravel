@@ -44,33 +44,51 @@
                         <a href="{{ route('view.register') }}" class="nav-link link-2">Sign Up</a>
                     </div>
                     <div class="container">
-                        <div class="heading">
-                            <div class="login-1">
-                                Login
+                        <form action="{{ route('auth.login') }}" method="POST">
+                            @method('post')
+                            @csrf
+                            <div class="heading">
+                                <div class="login-1">
+                                    Login
+                                </div>
+                                @if (session('error'))
+                                    <p class="pt-2 text-danger">
+                                        {{ Session::get('error') }}
+                                    </p>
+                                @else
+                                    <span class="please-enter-your-registered-username">
+                                        Please enter your registered username
+                                    </span>
+                                @endif
                             </div>
-                            <span class="please-enter-your-registered-username">
-                                Please enter your registered username
-                            </span>
-                        </div>
-                        <div class="input-fields">
-                            <span class="username">
-                                Username
-                            </span>
-                            <input type="text" class="form-control" placeholder="Enter Username">
+                            <div class="input-fields">
+                                <span class="username">
+                                    Username or Email Address
+                                </span>
+                                <input name="email" type="text"
+                                    class="form-control @error('email')
+                                    is-invalid
+                                @enderror"
+                                    placeholder="Enter Username or email address">
 
-                        </div>
-                        <div class="input-fields">
-                            <span class="password">
-                                Password
-                            </span>
-                            <input type="text" class="form-control" placeholder="Enter Password">
-                            <a href="" class="forgot-password ">
-                                <span class="float-end">Forgot Password?</span>
-                            </a>
-                        </div>
-                        <div class="input-fields">
-                            <button class="btn btn-primary btn-block p-2 sign-in">Sign In</button>
-                        </div>
+                            </div>
+                            <div class="input-fields">
+                                <span class="password">
+                                    Password
+                                </span>
+                                <input type="text" name="password"
+                                    class="form-control @error('password')
+                                    is-invalid
+                                @enderror"
+                                    placeholder="Enter Password">
+                                <a href="" class="forgot-password ">
+                                    <span class="float-end">Forgot Password?</span>
+                                </a>
+                            </div>
+                            <div class="input-fields">
+                                <button class="btn btn-primary btn-block p-2 sign-in">Sign In</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
