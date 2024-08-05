@@ -158,7 +158,7 @@
 /* navbar css  */
 /* navbar */
 .navbar {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     width: 100%;
     left: 0;
@@ -287,6 +287,7 @@
 .sidebar.close .navlink {
     display: none;
 }
+
 
 .nav_link:hover {
     color: var(--white-color);
@@ -434,6 +435,7 @@ body.dark {
 
 .main-panel {
     position: relative;
+    top: 60px;
     left: 260px;
     width: calc(100% - 260px);
     height: 100vh;
@@ -446,7 +448,8 @@ body.dark {
 }
 
 .input-fields .sign-in,
-.input-fields .sign-up {
+.input-fields .sign-up,
+.products .product-btn {
     background-color: #0A06F4;
 }
 
@@ -677,6 +680,10 @@ table thead tr th {
 
     .container-fluid .row .cart-col {
         width: 100%;
+    }
+
+    .product-table .product-actions {
+        background-color: #000000;
     }
 
 }

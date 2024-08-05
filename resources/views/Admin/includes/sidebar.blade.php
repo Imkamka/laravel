@@ -12,45 +12,64 @@
                     </span>
                     <span class="navlink">Dashboard</span>
                 </a>
-
-
             </li>
             <!-- end -->
-
             <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
             <!-- start -->
             <li class="item mb-3">
-                <a href="{{ route('view.purchase') }}"
-                    class="nav_link {{ Route::is('view.purchase') ? 'active' : ' ' }}">
+                <div href="#" class="nav_link submenu_item {{ Route::is('view.purchase') ? 'active' : ' ' }}">
                     <span class="navlink_icon">
                         <i class='bx bxs-dollar-circle'></i>
                     </span>
                     <span class="navlink">Purchases</span>
-                </a>
-
+                    <i class="bx bx-chevron-right arrow-left"></i>
+                </div>
+                <ul class="menu_items submenu">
+                    <a href="{{ route('products.index') }}" class="nav_link sublink">Products</a>
+                    <a href="#" class="nav_link sublink">Vendors</a>
+                    <a href="{{ route('view.purchase') }}"
+                        class="nav_link sublink {{ Route::is('view.purchase') ? 'active' : ' ' }}">Purchases</a>
+                    <a href="#" class="nav_link sublink">Payments</a>
+                </ul>
 
             </li>
             <!-- end -->
-
             <!-- duplicate these li tag if you want to add or remove navlink only -->
             <!-- Start -->
             <li class="item mb-3 ">
-                <a href="{{ route('view.sales') }}" class="nav_link {{ Route::is('view.sales') ? 'active' : ' ' }}">
+                <div href="{{ route('view.sales') }}"
+                    class="nav_link submenu_item {{ Route::is('view.sales') ? 'active' : ' ' }}">
                     <span class="navlink_icon ">
                         <i class='bx bx-line-chart'></i>
                     </span>
+                    <i class="bx bx-chevron-right arrow-left"></i>
+
                     <span class="navlink">Sales</span>
-                </a>
+                </div>
+                <ul class="menu_items submenu">
+                    <a href="#" class="nav_link sublink">Customers</a>
+                    <a href="#" class="nav_link sublink">Sales</a>
+                    <a href="#" class="nav_link sublink">Payments</a>
+                </ul>
             </li>
 
 
             <li class="item mb-3">
-                <a href="#" class="nav_link">
+                <div href="#" class="nav_link submenu_item">
                     <span class="navlink_icon">
                         <i class='bx bx-book'></i>
                     </span>
                     <span class="navlink">Report</span>
-                </a>
+                    <i class="bx bx-chevron-right arrow-left"></i>
+
+                </div>
+                <ul class="menu_items submenu">
+                    <a href="#" class="nav_link sublink">Overview</a>
+                    <a href="#" class="nav_link sublink">Purchases</a>
+                    <a href="#" class="nav_link sublink">Sales</a>
+                    <a href="#" class="nav_link sublink">Payments</a>
+                    <a href="#" class="nav_link sublink">Expenses</a>
+                </ul>
             </li>
             <li class="item mb-3">
                 <a href="#" class="nav_link">

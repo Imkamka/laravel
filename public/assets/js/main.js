@@ -1,3 +1,8 @@
+//Yajra datatable for products
+
+
+
+
 const body = document.querySelector("body");
 // const darkLight = document.querySelector("#darkLight");
 
@@ -36,16 +41,16 @@ sidebarOpen.addEventListener("click", () => sidebar.classList.toggle("close"));
 //     }
 // });
 
-// submenuItems.forEach((item, index) => {
-//     item.addEventListener("click", () => {
-//         item.classList.toggle("show_submenu");
-//         submenuItems.forEach((item2, index2) => {
-//             if (index !== index2) {
-//                 item2.classList.remove("show_submenu");
-//             }
-//         });
-//     });
-// });
+submenuItems.forEach((item, index) => {
+    item.addEventListener("click", () => {
+        item.classList.toggle("show_submenu");
+        submenuItems.forEach((item2, index2) => {
+            if (index !== index2) {
+                item2.classList.remove("show_submenu");
+            }
+        });
+    });
+});
 
 if (window.innerWidth < 768) {
     sidebar.classList.add("close");
@@ -53,4 +58,19 @@ if (window.innerWidth < 768) {
     sidebar.classList.remove("close");
 }
 
-
+$(document).ready(function () {
+    const url = $('#products').attr('data-url');
+    console.log($('#products'));
+    $('#products').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: url,
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'description', name: 'description' },
+            { data: 'type', name: 'type' },
+            { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+});
