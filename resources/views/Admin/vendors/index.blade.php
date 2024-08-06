@@ -1,4 +1,5 @@
 @extends('Admin.layout.app')
+@section('title', 'Vendors')
 
 @section('content')
     <div class="container-fluid p-3 products">

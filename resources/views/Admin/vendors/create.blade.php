@@ -1,4 +1,5 @@
 @extends('Admin.layout.app')
+@section('title', 'Store vendor')
 @section('content')
     <div class="row ">
         <h3>Vendor/<small class="text-muted">add new</small></h3>

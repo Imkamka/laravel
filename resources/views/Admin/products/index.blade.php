@@ -1,5 +1,5 @@
 @extends('Admin.layout.app')
-
+@section('title', 'Products List')
 @section('content')
     <div class="container-fluid p-3 products">
         <div class="row mb-3">

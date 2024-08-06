@@ -1,4 +1,5 @@
 @extends('Admin.layout.app')
+@section('title', 'Update vendor')
 @section('content')
     <div class="row ">
         <h3>Vendor/<small class="text-muted">Update</small></h3>
@@ -67,7 +68,7 @@
 
                     </div>
 
-                    <div class="col-12 mb-3">
+                    <div class="col-12 mb-3 " id="submit-action">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>

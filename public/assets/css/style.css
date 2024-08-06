@@ -686,6 +686,10 @@ table thead tr th {
         background-color: #000000;
     }
 
+    .row #submit-action {
+        background-color: #0A06F4 !important;
+    }
+
 }
 
 

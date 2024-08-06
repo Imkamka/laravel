@@ -1,4 +1,5 @@
 @extends('Admin.layout.app')
+@section('title', 'Store Product')
 @section('content')
     <div class="row ">
         <h3>Product Stock/<small class="text-muted">add new</small></h3>

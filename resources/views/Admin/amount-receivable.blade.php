@@ -1,4 +1,5 @@
 @extends('Admin.layout.app')
+@section('title', 'Receivable amounts')
 @section('content')
     <div class="container-fluid">
         <div class="row p-2">
