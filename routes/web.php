@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\VendorController;
 
 Route::get('/', function () {
     return view('Admin.welcome');
@@ -29,4 +30,5 @@ Route::group(['middleware' => 'user.auth'], function () {
     // Route::get('/products', [ProductController::class, 'index']);
     // Route::get('get-products', [ProductController::class, 'getProducts'])->name('get.products');
     Route::resource('products', ProductController::class);
+    Route::resource('vendors', VendorController::class);
 });

@@ -59,8 +59,10 @@ if (window.innerWidth < 768) {
 }
 
 $(document).ready(function () {
+    //Products table
     const url = $('#products').attr('data-url');
-    console.log($('#products'));
+    const vendorUrl = $('#vendors').attr('vendor-url');
+
     $('#products').DataTable({
         processing: true,
         serverSide: true,
@@ -70,6 +72,23 @@ $(document).ready(function () {
             { data: 'name', name: 'name' },
             { data: 'description', name: 'description' },
             { data: 'type', name: 'type' },
+            { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+
+    $('#vendors').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: vendorUrl,
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'full_name', name: 'full_name' },
+            { data: 'email', name: 'email' },
+            { data: 'phone', name: 'phone' },
+            { data: 'address', name: 'address' },
+            { data: 'company', name: 'company' },
+            { data: 'ntn', name: 'ntn' },
+            { data: 'is_active', name: 'is_active' },
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });
