@@ -630,6 +630,41 @@ table thead tr th {
     width: 50%;
 }
 
+
+#searchForm,
+#searchVendorForm {
+    position: relative;
+}
+
+#searchForm .col-12,
+#searchVendorForm .col-12 {
+    position: relative;
+}
+
+#productCard,
+#vendorCard {
+    width: 100%;
+    border: none;
+    border-radius: 12px
+}
+
+#searchResults,
+#searchVendorResults {
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    width: 100%;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#check-out-purchase button {
+    background-color: #0A06F4;
+    width: 50%;
+}
+
 /* dashboard cards layout media query css  */
 @media screen and (max-width: 990px) {
     .row .d-card {

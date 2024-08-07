@@ -14,15 +14,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mb-3">
-                <div class="card shadow" style="width: 100%; border: none; border-radius: 12px">
+                <div class="card shadow" id="productCard">
                     <div class="card-body p-4">
                         <div class="row mb-3">
-                            <form id="searchForm" autocomplete="off" style="position: relative;">
-                                <div class="col-12" style="position: relative;">
+                            <form id="searchForm" autocomplete="off">
+                                <div class="col-12">
                                     <input type="text" placeholder="Search Product" name="query"
                                         id="productSearchInput" class="form-control w-100">
-                                    <div id="searchResults"
-                                        style="border: 1px solid #ccc; position: absolute; z-index: 1000; background: white; width: 100%; display: none; max-height: 200px; overflow-y: auto;">
+                                    <div id="searchResults">
                                     </div>
                                 </div>
                             </form>
@@ -59,16 +58,15 @@
                 </div>
             </div>
             <div class="col-lg-4 mb-3">
-                <div class="card shadow" style="width: 100%; border: none; border-radius: 12px; ">
+                <div class="card shadow" id="vendorCard">
                     <div class="card-body p-4">
                         <div class="row mb-3">
                             <div class="col-12">
-                                <form id="searchVendorForm" autocomplete="off" style="position: relative;">
-                                    <div class="col-12" style="position: relative;">
+                                <form id="searchVendorForm" autocomplete="off">
+                                    <div class="col-12">
                                         <input type="text" placeholder="Search Vendor" name="vendorQuery"
                                             id="vendorSearchInput" class="form-control w-100">
-                                        <div id="searchVendorResults"
-                                            style="border: 1px solid #ccc; position: absolute; z-index: 1000; background: white; width: 100%; display: none; max-height: 200px; overflow-y: auto;">
+                                        <div id="searchVendorResults">
                                         </div>
                                     </div>
                                 </form>
@@ -85,6 +83,9 @@
                             </div>
                             <div class="col-auto">
                                 Rs. 0.00
+                            </div>
+                            <div class="col-12 mt-3 text-center" id="check-out-purchase">
+                                <button class="btn btn-sm btn-primary btn-block">Check out</button>
                             </div>
                         </div>
                     </div>
