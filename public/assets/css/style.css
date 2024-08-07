@@ -158,7 +158,7 @@
 /* navbar css  */
 /* navbar */
 .navbar {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     width: 100%;
     left: 0;
@@ -287,6 +287,7 @@
 .sidebar.close .navlink {
     display: none;
 }
+
 
 .nav_link:hover {
     color: var(--white-color);
@@ -434,6 +435,7 @@ body.dark {
 
 .main-panel {
     position: relative;
+    top: 60px;
     left: 260px;
     width: calc(100% - 260px);
     height: 100vh;
@@ -446,7 +448,8 @@ body.dark {
 }
 
 .input-fields .sign-in,
-.input-fields .sign-up {
+.input-fields .sign-up,
+.products .product-btn {
     background-color: #0A06F4;
 }
 
@@ -627,6 +630,41 @@ table thead tr th {
     width: 50%;
 }
 
+
+#searchForm,
+#searchVendorForm {
+    position: relative;
+}
+
+#searchForm .col-12,
+#searchVendorForm .col-12 {
+    position: relative;
+}
+
+#productCard,
+#vendorCard {
+    width: 100%;
+    border: none;
+    border-radius: 12px
+}
+
+#searchResults,
+#searchVendorResults {
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    width: 100%;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#check-out-purchase button {
+    background-color: #0A06F4;
+    width: 50%;
+}
+
 /* dashboard cards layout media query css  */
 @media screen and (max-width: 990px) {
     .row .d-card {
@@ -677,6 +715,14 @@ table thead tr th {
 
     .container-fluid .row .cart-col {
         width: 100%;
+    }
+
+    .product-table .product-actions {
+        background-color: #000000;
+    }
+
+    .row #submit-action {
+        background-color: #0A06F4 !important;
     }
 
 }

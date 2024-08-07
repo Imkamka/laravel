@@ -1,4 +1,4 @@
-{{-- @extends('Admin.layout.app')
+@extends('Admin.layout.app')
 @section('title', 'Purchases')
 @section('content')
     <div class="container-fluid">
@@ -9,7 +9,8 @@
                 </h3>
             </div>
             <div class="col-auto mb-4">
-                <a href="{{ }}" class="btn btn-primary btn-sm active"><i class='bx bx-plus-circle'></i>&nbsp;Add
+                <a href="{{ route('purchases.create') }}" class="btn btn-primary btn-sm active"><i
+                        class='bx bx-plus-circle'></i>&nbsp;Add
                     new</a>
             </div>
         </div>
@@ -39,4 +40,4 @@
             </div>
         </div>
     </div>
-@endsection --}}
+@endsection
