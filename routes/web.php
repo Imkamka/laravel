@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VendorController;
 
 Route::get('/', function () {
@@ -27,8 +28,12 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::get('/purchases', [PurchaseController::class, 'showPurchase'])->name('view.purchase');
     Route::get('/purchases/amount-receivable', [PurchaseController::class, 'showAmount'])->name('view.amount');
 
-    // Route::get('/products', [ProductController::class, 'index']);
-    // Route::get('get-products', [ProductController::class, 'getProducts'])->name('get.products');
+    //Resource controllers
     Route::resource('products', ProductController::class);
     Route::resource('vendors', VendorController::class);
+    Route::resource('purchases', PurchaseController::class);
+
+    //search requests
+    Route::get('/search', [SearchController::class, 'search']);
+    Route::get('/vendor-search', [SearchController::class, 'vendorSearchQuery']);
 });

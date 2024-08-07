@@ -27,8 +27,8 @@
                 <ul class="menu_items submenu">
                     <a href="{{ route('products.index') }}" class="nav_link sublink">Products</a>
                     <a href="{{ route('vendors.index') }}" class="nav_link sublink">Vendors</a>
-                    <a href="{{ route('view.purchase') }}"
-                        class="nav_link sublink {{ Route::is('view.purchase') ? 'active' : ' ' }}">Purchases</a>
+                    <a href="{{ route('purchases.index') }}"
+                        class="nav_link sublink {{ Route::is('purchases.index') ? 'active' : ' ' }}">Purchases</a>
                     <a href="#" class="nav_link sublink">Payments</a>
                 </ul>
 
