@@ -11,12 +11,12 @@ class AuthController extends Controller
 {
     public function login()
     {
-        return view('Admin.auth.login');
+        return view('auth.login');
     }
 
     public function register()
     {
-        return view('Admin.auth.register');
+        return view('auth.register');
     }
 
     //login authentication

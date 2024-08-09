@@ -12,11 +12,7 @@
             </div>
         </div>
         <div class="row">
-            @if (session('success'))
-                <div class="alert alert-success shadow ">
-                    {{ session('success') }}
-                </div>
-            @endif
+
         </div>
         <div class="row">
             <div class="col-lg-10 m-auto">
@@ -25,7 +21,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Product name</th>
                             <th>Description</th>
                             <th>Type</th>
                             <th>Action</th>
@@ -44,4 +40,5 @@
             </div>
         </div>
     </div>
+
 @endsection

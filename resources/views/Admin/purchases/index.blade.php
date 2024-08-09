@@ -14,22 +14,20 @@
                     new</a>
             </div>
         </div>
-        <div class="row">
+        <div class="row shadow-lg p-5 rounded-4">
             <div class="col-lg-10 m-auto">
-                <table class="table table-bordered p-4 w-100 product-table" id="products"
-                    data-url="{{ route('products.index') }}">
+                <table class="table table-bordered p-4 w-100 purchase-table" id="purchases"
+                    purchase-url="{{ route('purchases.index') }}">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Product</th>
-                            <th>Company</th>
+                            <th>Vendor</th>
+                            <th>Total price</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

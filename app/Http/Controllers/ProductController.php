@@ -21,13 +21,17 @@ class ProductController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '
                     <div class="product-actions d-flex justify-content-center ">
-                    <a href="' . route('products.edit', $row) . '" class="edit btn btn-primary btn-sm">Edit</a>';
+                    <a href="' . route('products.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
                     $btn .= '
                     <form action="' . route('products.destroy', $row) . '" method="POST">
                       ' . csrf_field() . '
                       ' . method_field('DELETE') . '
-                    <button type="submit" class="delete btn btn-danger btn-sm">Delete</button>
-                   </form>
+                    <button type="submit" class="delete btn btn-danger btn-sm" id="deleteBtn"><i class="bx bx-trash-alt" ></i></button>
+                   </form>&nbsp
+                    ';
+                    $btn .= '
+                    <div class="product-actions d-flex justify-content-center ">
+                    <a href="' . route('products.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
                    </div>
                     ';
                     return $btn;
@@ -73,6 +77,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        $product = Product::findOrFail($id);
+        return view('Admin.products.show', compact('product'));
     }
 
     /**

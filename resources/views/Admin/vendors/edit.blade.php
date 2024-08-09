@@ -1,6 +1,12 @@
 @extends('Admin.layout.app')
 @section('title', 'Update vendor')
 @section('content')
+    <div class="row">
+        <div class="col-12 my-4 ">
+            <a href="{{ url()->previous() }}" class="btn btn-outline-primary btn-sm align-items-center"><i
+                    class="bx bx-arrow-back"></i>Back</a>
+        </div>
+    </div>
     <div class="row ">
         <h3>Vendor/<small class="text-muted">Update</small></h3>
     </div>

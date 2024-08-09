@@ -11,13 +11,13 @@ class SearchController extends Controller
     public function Search(Request $request)
     {
         $query = $request->get('query');
-        $results = Product::where('name', 'LIKE', "%{$query}%")->get(['name']);
+        $results = Product::where('name', 'LIKE', "%{$query}%")->get(['id', 'name']);
         return response()->json($results);
     }
     public function vendorSearchQuery(Request $request)
     {
         $searchQuery = $request->get('vendorQuery');
-        $results = Vendor::where('company', 'LIKE', "%{$searchQuery}%")->get(['company']);
+        $results = Vendor::where('company', 'LIKE', "%{$searchQuery}%")->get(['id', 'company']);
         return response()->json($results);
     }
 }
