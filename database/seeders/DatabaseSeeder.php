@@ -15,15 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(1)->create();
-        // User::create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => bcrypt('1234'),
-        //     'email_verified_at' => now(),
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
+
         Vendor::create([
             'full_name' => 'test',
             'email' => 'test@test.com',
