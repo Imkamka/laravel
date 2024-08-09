@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
@@ -32,8 +33,12 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::resource('products', ProductController::class);
     Route::resource('vendors', VendorController::class);
     Route::resource('purchases', PurchaseController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('sales', SaleController::class);
 
     //search requests
     Route::get('/search', [SearchController::class, 'search']);
     Route::get('/vendor-search', [SearchController::class, 'vendorSearchQuery']);
+    Route::get('/purchase-search', [SearchController::class, 'purchaseSearchProduct']);
+    Route::get('/customer-search', [SearchController::class, 'customerSearch']);
 });

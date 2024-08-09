@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vendor;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class VendorController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,15 +15,15 @@ class VendorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Vendor::query();
+            $data = Customer::query();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '
                     <div class="product-actions d-flex justify-content-center ">
-                    <a href="' . route('vendors.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
+                    <a href="' . route('customers.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
                     $btn .= '
-                    <form action="' . route('vendors.destroy', $row) . '" method="POST">
+                    <form action="' . route('customers.destroy', $row) . '" method="POST">
                       ' . csrf_field() . '
                       ' . method_field('DELETE') . '
                     <button type="submit" class="delete btn btn-danger btn-sm" id="deleteBtn"><i class="bx bx-trash-alt" ></i></button>
@@ -31,7 +31,7 @@ class VendorController extends Controller
                     ';
                     $btn .= '
                     <div class="product-actions d-flex justify-content-center ">
-                    <a href="' . route('vendors.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
+                    <a href="' . route('customers.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
                    </div>
                     ';
                     return $btn;
@@ -39,7 +39,7 @@ class VendorController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('Admin.vendors.index');
+        return view('admin.customers.index');
     }
 
     /**
@@ -47,7 +47,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        return view('admin.vendors.create');
+        return view('admin.customers.create');
     }
 
     /**
@@ -61,62 +61,61 @@ class VendorController extends Controller
         ]);
         if ($validator->passes()) {
 
-            $vendors = new Vendor();
-            $vendors->full_name = $request->full_name;
-            $vendors->email = $request->email;
-            $vendors->phone = $request->phone;
-            $vendors->address = $request->address;
-            $vendors->company = $request->company;
-            $vendors->ntn = $request->ntn;
-            $vendors->is_active = $request->is_active;
-            $vendors->save();
+            $customers = new Customer();
+            $customers->full_name = $request->full_name;
+            $customers->email = $request->email;
+            $customers->phone = $request->phone;
+            $customers->address = $request->address;
+            $customers->company = $request->company;
+            $customers->ntn = $request->ntn;
+            $customers->is_active = $request->is_active;
+            $customers->save();
             return redirect()
-                ->route('vendors.index')
-                ->with('success', 'Vendor added');
+                ->route('customers.index')
+                ->with('success', 'Customer added');
         }
         return back()
             ->withErrors($validator);
     }
 
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Customer $customer)
     {
-        $vendor = Vendor::findOrFail($id);
-        return view('Admin.vendors.show', compact('vendor'));
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Customer $customer)
     {
-        $vendor = Vendor::findOrFail($id);
-        return view('Admin.vendors.edit', compact('vendor'));
+        return view('admin.customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $customer)
     {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|min:3',
         ]);
         if ($validator->passes()) {
-            $vendors = Vendor::findOrFail($id);
-            $vendors->full_name = $request->full_name;
-            $vendors->email = $request->email;
-            $vendors->phone = $request->phone;
-            $vendors->address = $request->address;
-            $vendors->company = $request->company;
-            $vendors->ntn = $request->ntn;
-            $vendors->is_active = $request->is_active;
-            $vendors->save();
+            $customers = Customer::findOrFail($customer);
+            $customers->full_name = $request->full_name;
+            $customers->email = $request->email;
+            $customers->phone = $request->phone;
+            $customers->address = $request->address;
+            $customers->company = $request->company;
+            $customers->ntn = $request->ntn;
+            $customers->is_active = $request->is_active;
+            $customers->save();
             return redirect()
-                ->route('vendors.index')
-                ->with('success', 'Vendor Update');
+                ->route('customers.index')
+                ->with('success', 'Customer updated');
         }
         return back()
             ->withErrors($validator);
@@ -125,10 +124,9 @@ class VendorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Customer $customer)
     {
-        $vendor = Vendor::findOrFail($id);
-        $vendor->destroy($vendor->id);
-        return redirect()->route('vendors.index')->with('success', 'Vendor Deleted');
+        $customer->destroy($customer->id);
+        return redirect()->route('customers.index')->with('success', 'Customer Deleted');
     }
 }

@@ -50,13 +50,16 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        // Validate and get vendor and total price from the request
-        $vendor_id = $request->input('vendor_id');
-        foreach ($request->input('items') as $item) {
-            $total_price = $item['total_price'];
-        }
 
-        // dd($total_price);
+        $vendor_id = $request->input('vendor_id');
+
+        // Calculate the sum of total_price
+        $items = $request->input('items');
+        $total_price = 0;
+        foreach ($items as $item) {
+            $total_price += $item['total_price'];
+        }
+        // dd($totalSum);
         // Create a purchase record
         $purchase = Purchase::create([
             'vendor_id' => $vendor_id,

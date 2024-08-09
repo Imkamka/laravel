@@ -37,8 +37,7 @@
             <!-- duplicate these li tag if you want to add or remove navlink only -->
             <!-- Start -->
             <li class="item mb-3 ">
-                <div href="{{ route('view.sales') }}"
-                    class="nav_link submenu_item {{ Route::is('view.sales') ? 'active' : ' ' }}">
+                <div href="" class="nav_link submenu_item {{ Route::is('view.sales') ? 'active' : ' ' }}">
                     <span class="navlink_icon ">
                         <i class='bx bx-line-chart'></i>
                     </span>
@@ -47,8 +46,8 @@
                     <span class="navlink">Sales</span>
                 </div>
                 <ul class="menu_items submenu">
-                    <a href="#" class="nav_link sublink">Customers</a>
-                    <a href="#" class="nav_link sublink">Sales</a>
+                    <a href="{{ route('customers.index') }}" class="nav_link sublink">Customers</a>
+                    <a href="{{ route('sales.index') }}" class="nav_link sublink">Sales</a>
                     <a href="#" class="nav_link sublink">Payments</a>
                 </ul>
             </li>
