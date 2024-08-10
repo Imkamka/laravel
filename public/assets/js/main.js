@@ -167,6 +167,42 @@ $(document).ready(function () {
         ]
     });
 
+    const purchasePaymentURL = $('#purchasePayments').attr('payments-url');
+    //sales table
+    $('#purchasePayments').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: purchasePaymentURL,
+        columns: [
+            {
+                data: 'company',
+                name: 'company',
+
+            },
+            { data: 'amount', name: 'amount' },
+
+            { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+
+    const salePaymentURL = $('#salePayments').attr('salePayments-url');
+    //sales table
+    $('#salePayments').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: salePaymentURL,
+        columns: [
+            {
+                data: 'company',
+                name: 'company',
+
+            },
+            { data: 'amount', name: 'amount' },
+
+            { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+
 });
 
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
-use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class PurchaseController extends Controller
@@ -40,11 +41,11 @@ class PurchaseController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('Admin.purchases.index');
+        return view('admin.purchases.index');
     }
     public function create()
     {
-        return view('Admin.purchases.create');
+        return view('admin.purchases.create');
     }
 
     public function store(Request $request)
@@ -80,8 +81,9 @@ class PurchaseController extends Controller
                 'total_price' => $item['total_price'],
             ]);
         }
+        Session::flash('success', 'Purchase added');
 
-        return redirect()->route('purchases.index')->with('success', 'Purchase completed successfully!');
+        return redirect()->route('purchases.index');
     }
 
 
@@ -95,6 +97,7 @@ class PurchaseController extends Controller
     {
         $purchase = Purchase::findOrFail($id);
         $purchase->destroy($purchase->id);
-        return redirect()->route('purchases.index')->with('success', 'Purchase deleted');
+        Session::flash('success', 'Purchase deleted');
+        return redirect()->route('purchases.index');
     }
 }

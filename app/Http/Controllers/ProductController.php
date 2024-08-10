@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -64,9 +65,9 @@ class ProductController extends Controller
             $products->description = $request->description;
             $products->type = $request->type;
             $products->save();
+            Session::flash('success', 'Product added');
             return redirect()
-                ->route('products.index')
-                ->with('success', 'Product successfully added');
+                ->route('products.index');
         }
         return back()
             ->withErrors($validator);
@@ -104,9 +105,9 @@ class ProductController extends Controller
             $product->description = $request->description;
             $product->type = $request->type;
             $product->save();
+            Session::flash('success', 'Product Updated');
             return redirect()
-                ->route('products.index')
-                ->with('success', 'Product Updated');
+                ->route('products.index');
         }
         return back()
             ->withErrors($validator);
@@ -119,6 +120,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->destroy($product->id);
-        return redirect()->route('products.index')->with('success', 'Product Deleted');
+        Session::flash('success', 'Product deleted');
+        return redirect()->route('products.index');
     }
 }

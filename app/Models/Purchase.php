@@ -22,4 +22,9 @@ class Purchase extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+
+    public function payment()
+    {
+        return $this->hasMany(PurchasePayment::class);
+    }
 }

@@ -29,7 +29,7 @@
                     <a href="{{ route('vendors.index') }}" class="nav_link sublink">Vendors</a>
                     <a href="{{ route('purchases.index') }}"
                         class="nav_link sublink {{ Route::is('purchases.index') ? 'active' : ' ' }}">Purchases</a>
-                    <a href="#" class="nav_link sublink">Payments</a>
+                    <a href="{{ route('purchase-payments.index') }}" class="nav_link sublink">Payments</a>
                 </ul>
 
             </li>
@@ -48,7 +48,7 @@
                 <ul class="menu_items submenu">
                     <a href="{{ route('customers.index') }}" class="nav_link sublink">Customers</a>
                     <a href="{{ route('sales.index') }}" class="nav_link sublink">Sales</a>
-                    <a href="#" class="nav_link sublink">Payments</a>
+                    <a href="{{ route('sale-payments.index') }}" class="nav_link sublink">Payments</a>
                 </ul>
             </li>
 

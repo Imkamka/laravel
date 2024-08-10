@@ -1,10 +1,10 @@
 @extends('Admin.layout.app')
 @section('title', 'Store Product')
 @section('content')
-    <div class="row ">
+    <div class="row p-3">
         <h3>Product Stock/<small class="text-muted">add new</small></h3>
     </div>
-    <div class="container product-details">
+    <div class="container product-details p-5 shadow-lg rounded-3">
         <h4 class="product-header p-5 text-center">Add product details</h4>
         <form action="{{ route('products.store') }}" method="POST">
             @method('post')
@@ -41,9 +41,8 @@
                         @enderror"
                             name="type">
                             <option selected disabled>Select product type</option>
-                            <option value="Cash"> Cash </option>
-                            <option value="Later on">Later on</option>
-                            <option value="COD">COD</option>
+                            <option value="Milk"> Milk </option>
+                            <option value="Protein">Protein</option>
                         </select>
                         @error('type')
                             {{ $message }}

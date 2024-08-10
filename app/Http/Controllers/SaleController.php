@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class SaleController extends Controller
@@ -71,8 +72,9 @@ class SaleController extends Controller
                 'total_price' => $item['total_price'],
             ]);
         }
+        Session::flash('success', 'Sale created');
 
-        return redirect()->route('sales.index')->with('success', 'Sale Created!');
+        return redirect()->route('sales.index');
     }
     public function show($id)
     {
@@ -84,6 +86,7 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         $sale->destroy($sale->id);
-        return redirect()->route('sales.index')->with('success', 'Sale deleted');
+        Session::flash('success', 'Sale deleted');
+        return redirect()->route('sales.index');
     }
 }

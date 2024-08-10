@@ -1,10 +1,10 @@
 @extends('Admin.layout.app')
 @section('title', 'Update Product')
 @section('content')
-    <div class="row ">
+    <div class="row p-3">
         <h3>Product Stock/<small class="text-muted">Update</small></h3>
     </div>
-    <div class="container product-details">
+    <div class="container product-details p-5 shadow-lg rounded-3">
         <h4 class="product-header p-5 text-center">Update product details</h4>
         <form action="{{ route('products.update', $product->id) }}" method="POST">
             @method('PUT')
@@ -43,9 +43,8 @@
                         @enderror"
                             name="type">
                             <option selected disabled>Select product type</option>
-                            <option value="Cash" {{ $product->type === 'Cash' ? 'selected' : '' }}> Cash </option>
-                            <option value="Lator on" {{ $product->type === 'Lator on' ? 'selected' : '' }}>Later on</option>
-                            <option value="COD" {{ $product->type === 'COD' ? 'selected' : '' }}>COD</option>
+                            <option value="Cash" {{ $product->type === 'Milk' ? 'selected' : '' }}> Milk </option>
+                            <option value="Lator on" {{ $product->type === 'Protein' ? 'selected' : '' }}>Protein</option>
                         </select>
                         @error('type')
                             {{ $message }}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,9 +71,9 @@ class VendorController extends Controller
             $vendors->ntn = $request->ntn;
             $vendors->is_active = $request->is_active;
             $vendors->save();
+            Session::flash('success', 'Vendor created');
             return redirect()
-                ->route('vendors.index')
-                ->with('success', 'Vendor added');
+                ->route('vendors.index');
         }
         return back()
             ->withErrors($validator);
@@ -114,9 +115,10 @@ class VendorController extends Controller
             $vendors->ntn = $request->ntn;
             $vendors->is_active = $request->is_active;
             $vendors->save();
+            Session::flash('success', 'Vendor updated');
+
             return redirect()
-                ->route('vendors.index')
-                ->with('success', 'Vendor Update');
+                ->route('vendors.index');
         }
         return back()
             ->withErrors($validator);
@@ -129,6 +131,7 @@ class VendorController extends Controller
     {
         $vendor = Vendor::findOrFail($id);
         $vendor->destroy($vendor->id);
-        return redirect()->route('vendors.index')->with('success', 'Vendor Deleted');
+        Session::flash('success', 'Vendor deleted');
+        return redirect()->route('vendors.index');
     }
 }

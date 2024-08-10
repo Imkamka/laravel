@@ -1,15 +1,15 @@
 @extends('Admin.layout.app')
 @section('title', 'Store vendor')
 @section('content')
-    <div class="row ">
+    <div class="row p-3">
         <h3>Vendor/<small class="text-muted">add new</small></h3>
     </div>
-    <div class="container product-details">
-        <h4 class="product-header p-5 text-center">Add vendor details</h4>
+    <div class="container product-details p-5 shadow-lg rounded-3">
+        <h4 class="product-header p-2 text-center">Add vendor details</h4>
         <form action="{{ route('vendors.store') }}" method="POST">
             @csrf
             @method('POST')
-            <div class="row w-100">
+            <div class="row w-100 p-3">
                 <form class="row g-3">
                     <div class="col-md-6 mb-3">
                         <label for="inputProductName4" class="form-label">Full name</label>

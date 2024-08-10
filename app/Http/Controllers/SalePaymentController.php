@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Sale;
+use App\Models\Customer;
+use App\Models\SalePayment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
+
+class SalePaymentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = SalePayment::query()
+                ->join('customers', 'sale_payments.customer_id', '=', 'customers.id')
+                ->select('sale_payments.*', 'customers.company')
+                ->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                    <div class="product-actions d-flex justify-content-center ">
+                    <a href="' . route('sale-payments.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle"></i></a> &nbsp';
+                    $btn .= '
+                    <form action="' . route('sale-payments.destroy', $row) . '" method="POST">
+                      ' . csrf_field() . '
+                      ' . method_field('DELETE') . '
+                    <button type="submit" class="delete btn btn-danger btn-sm">
+                        <i class="bx bx-trash-alt"></i>
+                    </button>
+                   </form>
+                   </div>
+                    ';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('Admin.sales.payments.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $customers = Customer::whereIn('id', Sale::pluck('customer_id'))->get();
+        // return $vendors;
+        return view('admin.sales.payments.create', compact('customers'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $payments = new SalePayment();
+        $payments->customer_id = $request->customer;
+        $payments->amount = $request->amount;
+        $payments->description = $request->description;
+        $payments->save();
+        Session::flash('success', 'Sale payment created');
+
+        return redirect()
+            ->route('sale-payments.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(SalePayment $salePayment)
+    {
+        return view('admin.sales.payments.show', compact('salePayment'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(SalePayment $salePayment)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, SalePayment $salePayment)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(SalePayment $salePayment)
+    {
+        $salePayment->destroy($salePayment->id);
+        Session::flash('success', 'Sale payment deleted');
+        return redirect()->route('sale-payments.index');
+    }
+}

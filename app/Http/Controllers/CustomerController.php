@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,9 +71,9 @@ class CustomerController extends Controller
             $customers->ntn = $request->ntn;
             $customers->is_active = $request->is_active;
             $customers->save();
+            Session::flash('success', 'Customer added');
             return redirect()
-                ->route('customers.index')
-                ->with('success', 'Customer added');
+                ->route('customers.index');
         }
         return back()
             ->withErrors($validator);
@@ -113,9 +114,10 @@ class CustomerController extends Controller
             $customers->ntn = $request->ntn;
             $customers->is_active = $request->is_active;
             $customers->save();
+            Session::flash('success', 'Customer updated');
+
             return redirect()
-                ->route('customers.index')
-                ->with('success', 'Customer updated');
+                ->route('customers.index');
         }
         return back()
             ->withErrors($validator);
@@ -127,6 +129,7 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->destroy($customer->id);
-        return redirect()->route('customers.index')->with('success', 'Customer Deleted');
+        Session::flash('success', 'Customer deleted');
+        return redirect()->route('customers.index');
     }
 }

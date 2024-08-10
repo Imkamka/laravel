@@ -10,12 +10,12 @@
     <div class="row ">
         <h3>Vendor/<small class="text-muted">Update</small></h3>
     </div>
-    <div class="container product-details">
+    <div class="container product-details shadow-lg rounded-3">
         <h4 class="product-header p-5 text-center">Update vendor details</h4>
         <form action="{{ route('vendors.update', $vendor) }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="row w-100">
+            <div class="row w-100 p-5">
                 <form class="row g-3">
                     <div class="col-md-6 mb-3">
                         <label for="inputProductName4" class="form-label">Full name</label>

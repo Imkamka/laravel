@@ -12,13 +12,7 @@
                         class='bx bx-plus-circle'></i>&nbsp;Add new</a>
             </div>
         </div>
-        <div class="row">
-            @if (session('success'))
-                <div class="alert alert-success shadow ">
-                    {{ session('success') }}
-                </div>
-            @endif
-        </div>
+
         <div class="row shadow-lg rounded-3 p-5">
             <div class="col-lg-10 m-auto">
                 <table class="table table-bordered p-4 w-100 customer-table" id="customers"
