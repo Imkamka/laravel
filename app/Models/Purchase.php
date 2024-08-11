@@ -25,6 +25,6 @@ class Purchase extends Model
 
     public function payment()
     {
-        return $this->hasMany(PurchasePayment::class);
+        return $this->hasMany(PurchasePayment::class, 'vendor_id', 'vendor_id');
     }
 }

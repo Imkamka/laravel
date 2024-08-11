@@ -11,7 +11,7 @@ class PurchasePayment extends Model
 
     public function purchase()
     {
-        $this->belongsTo(Purchase::class);
+        $this->belongsTo(Purchase::class, 'vendor_id', 'vendor_id');
     }
 
     public function vendor()

@@ -19,14 +19,9 @@
                     customer-url="{{ route('customers.index') }}">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Email Address</th>
-                            <th>Phone no.</th>
-                            <th>Address</th>
                             <th>Company</th>
-                            <th>NTN</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,11 +31,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+
                         </tr>
                     </tbody>
                 </table>

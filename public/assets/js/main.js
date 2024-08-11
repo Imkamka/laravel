@@ -78,20 +78,10 @@ $(document).ready(function () {
         serverSide: true,
         ajax: vendorUrl,
         columns: [
-            { data: 'id', name: 'id' },
             { data: 'full_name', name: 'full_name' },
             { data: 'email', name: 'email' },
-            { data: 'phone', name: 'phone' },
-            { data: 'address', name: 'address' },
             { data: 'company', name: 'company' },
-            { data: 'ntn', name: 'ntn' },
-            {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data) {
-                    return data == 1 ? 'Active' : 'Inactive'
-                }
-            },
+
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });
@@ -125,20 +115,10 @@ $(document).ready(function () {
         serverSide: true,
         ajax: customerUrl,
         columns: [
-            { data: 'id', name: 'id' },
             { data: 'full_name', name: 'full_name' },
             { data: 'email', name: 'email' },
-            { data: 'phone', name: 'phone' },
-            { data: 'address', name: 'address' },
             { data: 'company', name: 'company' },
-            { data: 'ntn', name: 'ntn' },
-            {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data) {
-                    return data == 1 ? 'Active' : 'Inactive'
-                }
-            },
+
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });

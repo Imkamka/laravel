@@ -19,24 +19,14 @@
                     vendor-url="{{ route('vendors.index') }}">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Email Address</th>
-                            <th>Phone no.</th>
-                            <th>Address</th>
                             <th>Company</th>
-                            <th>NTN</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
