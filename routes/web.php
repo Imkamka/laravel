@@ -2,12 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchasePaymentController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SalePaymentController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VendorController;
+use App\Models\PurchasePayment;
 
 Route::get('/', function () {
     return view('Admin.welcome');
@@ -32,8 +36,14 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::resource('products', ProductController::class);
     Route::resource('vendors', VendorController::class);
     Route::resource('purchases', PurchaseController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('sales', SaleController::class);
+    Route::resource('purchase-payments', PurchasePaymentController::class);
+    Route::resource('sale-payments', SalePaymentController::class);
 
     //search requests
     Route::get('/search', [SearchController::class, 'search']);
     Route::get('/vendor-search', [SearchController::class, 'vendorSearchQuery']);
+    Route::get('/purchase-search', [SearchController::class, 'purchaseSearchProduct']);
+    Route::get('/customer-search', [SearchController::class, 'customerSearch']);
 });

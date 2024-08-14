@@ -1,25 +1,21 @@
 @extends('Admin.layout.app')
-@section('title', 'Create purchase')
+@section('title', 'Create sale')
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-auto me-auto mb-3">
                 <h3 class="page-title">
-                    Purchase Cart
+                    Sales Cart
                 </h3>
             </div>
-
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mb-3">
-                <form action="{{ route('purchases.store') }}" method="POST" id="checkoutForm">
+                <form action="{{ route('sales.store') }}" method="POST" id="checkoutForm">
                     @method('POST')
                     @csrf
-
-                    {{-- Product id  --}}
-
                     <div class="card shadow" id="productCard">
                         <div class="card-body p-4">
                             <!-- Product search and cart section -->
@@ -27,13 +23,12 @@
                             <div class="row mb-3">
                                 <div id="searchForm" autocomplete="off">
                                     <div class="col-sm-12">
-                                        <input type="text" placeholder="Search Product" id="productSearchInput"
+                                        <input type="text" placeholder="Search product" id="purchaseSearchProduct"
                                             class="form-control w-100">
                                         <div id="searchResults"></div>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Shopping Cart -->
                             <h5 class="card-title"><strong>Shopping Cart</strong></h5>
                             <h6 class="card-subtitle mb-2 text-body-secondary text-end" id="itemsCount">0 items</h6>
@@ -68,10 +63,10 @@
                 <div class="card shadow" id="summaryCard">
                     <div class="card-body p-4">
                         <!-- Vendor Search -->
-                        <div id="searchVendorForm" autocomplete="off">
-                            <input type="text" placeholder="Search vendor" id="vendorSearchInput"
+                        <div id="searchCustomerForm" autocomplete="off">
+                            <input type="text" placeholder="Search customer" id="customerSearchInput"
                                 class="form-control w-100 mb-3">
-                            <div id="searchVendorResults"></div>
+                            <div id="searchCustomerResults"></div>
                         </div>
 
                         <!-- Summary -->
@@ -79,8 +74,8 @@
                         <hr>
 
                         <div class="text-left">
-                            <input type="hidden" id="vendor_id" name="vendor_id">
-                            <strong>Company </strong><span id="selectedVendor" name="company">None</span>
+                            <input type="hidden" id="customer_id" name="customer_id">
+                            <strong>Company </strong><span id="selectedCustomer" name="company">None</span>
                         </div>
                         <hr>
                         <div class="text-left">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,13 +22,17 @@ class ProductController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '
                     <div class="product-actions d-flex justify-content-center ">
-                    <a href="' . route('products.edit', $row) . '" class="edit btn btn-primary btn-sm">Edit</a>';
+                    <a href="' . route('products.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
                     $btn .= '
                     <form action="' . route('products.destroy', $row) . '" method="POST">
                       ' . csrf_field() . '
                       ' . method_field('DELETE') . '
-                    <button type="submit" class="delete btn btn-danger btn-sm">Delete</button>
-                   </form>
+                    <button type="submit" class="delete btn btn-danger btn-sm" id="deleteBtn"><i class="bx bx-trash-alt" ></i></button>
+                   </form>&nbsp
+                    ';
+                    $btn .= '
+                    <div class="product-actions d-flex justify-content-center ">
+                    <a href="' . route('products.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
                    </div>
                     ';
                     return $btn;
@@ -60,9 +65,9 @@ class ProductController extends Controller
             $products->description = $request->description;
             $products->type = $request->type;
             $products->save();
+            Session::flash('success', 'Product added');
             return redirect()
-                ->route('products.index')
-                ->with('success', 'Product successfully added');
+                ->route('products.index');
         }
         return back()
             ->withErrors($validator);
@@ -73,6 +78,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        $product = Product::findOrFail($id);
+        return view('Admin.products.show', compact('product'));
     }
 
     /**
@@ -98,9 +105,9 @@ class ProductController extends Controller
             $product->description = $request->description;
             $product->type = $request->type;
             $product->save();
+            Session::flash('success', 'Product Updated');
             return redirect()
-                ->route('products.index')
-                ->with('success', 'Product Updated');
+                ->route('products.index');
         }
         return back()
             ->withErrors($validator);
@@ -113,6 +120,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->destroy($product->id);
-        return redirect()->route('products.index')->with('success', 'Product Deleted');
+        Session::flash('success', 'Product deleted');
+        return redirect()->route('products.index');
     }
 }
