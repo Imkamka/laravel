@@ -24,7 +24,8 @@
                                 <div id="searchForm" autocomplete="off">
                                     <div class="col-sm-12">
                                         <input type="text" placeholder="Search product" id="purchaseSearchProduct"
-                                            class="form-control w-100">
+                                            class="form-control w-100 ">
+                                        <input type="hidden" name="productInput" id="productInput">
                                         <div id="searchResults"></div>
                                     </div>
                                 </div>
@@ -65,12 +66,13 @@
                         <!-- Vendor Search -->
                         <div id="searchCustomerForm" autocomplete="off">
                             <input type="text" placeholder="Search customer" id="customerSearchInput"
-                                class="form-control w-100 mb-3">
+                                class="form-control w-100 ">
+
                             <div id="searchCustomerResults"></div>
                         </div>
 
                         <!-- Summary -->
-                        <h5 class="card-title"><strong>Summary</strong></h5>
+                        <h5 class="card-title mt-3"><strong>Summary</strong></h5>
                         <hr>
 
                         <div class="text-left">

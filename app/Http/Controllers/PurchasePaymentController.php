@@ -18,7 +18,7 @@ class PurchasePaymentController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = PurchasePayment::query()
+            $data = PurchasePayment::where('purchase_payments.is_deleted', '=', 0)
                 ->join('vendors', 'purchase_payments.vendor_id', '=', 'vendors.id')
                 ->select('purchase_payments.*', 'vendors.company')
                 ->get();
@@ -80,27 +80,14 @@ class PurchasePaymentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PurchasePayment $purchasePayment)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, PurchasePayment $purchasePayment)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(PurchasePayment $purchasePayment)
     {
-        $purchasePayment->destroy($purchasePayment->id);
+        $purchasePayment->is_deleted = 1;
+        $purchasePayment->deleted_at = now();
+        $purchasePayment->save();
 
         Session::flash('success', 'Purchase payment deleted');
         return redirect()->route('purchase-payments.index');

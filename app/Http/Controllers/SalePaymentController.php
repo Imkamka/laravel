@@ -17,7 +17,7 @@ class SalePaymentController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = SalePayment::query()
+            $data = SalePayment::where('sale_payments.is_deleted', 0)
                 ->join('customers', 'sale_payments.customer_id', '=', 'customers.id')
                 ->select('sale_payments.*', 'customers.company')
                 ->get();
@@ -42,7 +42,7 @@ class SalePaymentController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('Admin.sales.payments.index');
+        return view('admin.sales.payments.index');
     }
 
     /**
@@ -79,28 +79,15 @@ class SalePaymentController extends Controller
         return view('admin.sales.payments.show', compact('salePayment'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SalePayment $salePayment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, SalePayment $salePayment)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(SalePayment $salePayment)
     {
-        $salePayment->destroy($salePayment->id);
+        $salePayment->is_deleted = 1;
+        $salePayment->deleted_at = now();
+        $salePayment->save();
         Session::flash('success', 'Sale payment deleted');
         return redirect()->route('sale-payments.index');
     }

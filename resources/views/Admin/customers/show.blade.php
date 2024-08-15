@@ -11,6 +11,38 @@
 
         </div>
         <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Invoice</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $customerInvoice ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Paid amount</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $customerPaidAmount ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Balance</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $customerBalance ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm p-4">
                     <div class="card-body">
@@ -49,6 +81,36 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h3>Reports</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered p-4 w-100 report-table" id="customerReports"
+                    customerReport-url="{{ route('customers.show', $customer) }}">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Sale</th>
+                            <th>Payment</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="row">

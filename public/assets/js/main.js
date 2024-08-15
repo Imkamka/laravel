@@ -85,6 +85,23 @@ $(document).ready(function () {
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });
+
+    const vendorReportURL = $('#vendorReports').attr('vendorReport-url');
+    //vendors reports table
+    $('#vendorReports').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: vendorReportURL,
+        columns: [
+            // { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'type', name: 'type' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'total_price', name: 'total_price' },
+            { data: 'amount', name: 'amount' },
+            { data: 'balance', name: 'balance' },
+        ]
+    });
+
     //purchases table
     $('#purchases').DataTable({
         processing: true,
@@ -120,6 +137,21 @@ $(document).ready(function () {
             { data: 'company', name: 'company' },
 
             { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+    const customerReportURL = $('#customerReports').attr('customerReport-url');
+    //vendors reports table
+    $('#customerReports').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: customerReportURL,
+        columns: [
+            // { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'type', name: 'type' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'total_price', name: 'total_price' },
+            { data: 'amount', name: 'amount' },
+            { data: 'balance', name: 'balance' },
         ]
     });
 
@@ -183,6 +215,113 @@ $(document).ready(function () {
         ]
     });
 
+    const expenseURL = $('#expenses').attr('expenses-url');
+    //sales table
+    $('#expenses').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: expenseURL,
+        columns: [
+            {
+                data: 'amount',
+                name: 'amount',
+
+            },
+            { data: 'description', name: 'description' },
+
+            { data: 'action', name: 'action', orderable: true, searchable: true },
+        ]
+    });
+
+    //Reports
+    const purchaseReportTableURL = $('#purchaseReportTable').attr('report-url');
+    //vendors reports table
+    $('#purchaseReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: purchaseReportTableURL,
+            data: function (data) {
+                data.start_date = $('input[name="start_date"]').val();
+                data.end_date = $('input[name="end_date"]').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'company', name: 'company' },
+            { data: 'total_price', name: 'total_price' },
+            { data: 'created_at', name: 'created_at' },
+        ]
+    });
+
+    const saleReportTableURL = $('#saleReportTable').attr('report-surl');
+    //sales reports table
+    $('#saleReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: saleReportTableURL,
+            data: function (data) {
+                data.start_date = $('input[name="start_date"]').val();
+                data.end_date = $('input[name="end_date"]').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'company', name: 'company' },
+            { data: 'total_price', name: 'total_price' },
+            { data: 'created_at', name: 'created_at' },
+        ]
+    });
+
+    //payments reports table
+    const paymentReportTableURL = $('#paymentReportTable').attr('report-url');
+    $('#paymentReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: paymentReportTableURL,
+            data: function (data) {
+                data.start_date = $('input[name="start_date"]').val();
+                data.end_date = $('input[name="end_date"]').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'type', name: 'type' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'amount', name: 'amount' },
+            { data: 'balance', name: 'balance' },
+        ]
+    });
+
+    //expenses reports table
+    const expenseReportTableURL = $('#expenseReportTable').attr('report-url');
+    $('#expenseReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: expenseReportTableURL,
+            data: function (data) {
+                data.start_date = $('input[name="start_date"]').val();
+                data.end_date = $('input[name="end_date"]').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'amount', name: 'amount' },
+            { data: 'created_at', name: 'created_at' },
+        ]
+    });
+
+
+    $('.searchFormReport').on('submit', function (e) {
+        e.preventDefault();
+        $('#purchaseReportTable').DataTable().draw()
+        $('#saleReportTable').DataTable().draw()
+        $('#paymentReportTable').DataTable().draw()
+        $('#expenseReportTable').DataTable().draw()
+    })
 });
 
 
@@ -303,13 +442,15 @@ if (customerSearchInput) {
                         resultsDiv.style.display = 'block';
                         data.forEach(item => {
                             let divItem = document.createElement('div');
-                            divItem.textContent = item.company;
                             divItem.style.padding = '8px';
                             divItem.style.cursor = 'pointer';
                             divItem.addEventListener('click', function () {
                                 document.getElementById('customerSearchInput').value = '';
                                 document.getElementById('selectedCustomer').textContent = item.company; // Update selected customer in summary
                                 document.getElementById('customer_id').value = item.id;
+                                document.getElementById('productInput').value = item.product['name'
+
+                                ];
                                 resultsDiv.style.display = 'none';
                             });
                             resultsDiv.appendChild(divItem);

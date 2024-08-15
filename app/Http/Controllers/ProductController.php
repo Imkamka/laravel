@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::query();
+            $data = Product::where('is_deleted', '=', 0)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -119,7 +119,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        $product->destroy($product->id);
+        $product->is_deleted = 1;
+        $product->deleted_at = now();
+
+        $product->save();
+        // $product->destroy($product->id);
         Session::flash('success', 'Product deleted');
         return redirect()->route('products.index');
     }

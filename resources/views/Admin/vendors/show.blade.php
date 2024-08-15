@@ -1,7 +1,7 @@
 @extends('Admin.layout.app')
 @section('title', 'Vendor info')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid shadow p-5 rounded-4">
         <div class="row">
             <div class="col-auto me-auto mb-3">
                 <h3 class="page-title">
@@ -11,8 +11,40 @@
 
         </div>
         <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Invoice</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $vendorInvoice ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Paid amount</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $vendorPaidAmount ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card p-4 shadow rounded-3">
+                    <div class="card-header">
+                        <h3>Balance</h3>
+                    </div>
+                    <div class="card-body ">
+                        <h4 class="">{{ $vendorBalance ?? 0 }} PKR</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <div class="card shadow-sm p-4">
+                <div class="card p-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3"><strong>Vendor informations</strong></h5>
                         <div class="d-flex">
@@ -47,8 +79,45 @@
                             <h6 class="card-subtitle mb-2 text-primary">
                                 {{ $vendor->is_active == 1 ? 'Active' : 'Inactive' }}</h6>
                         </div>
+                        <div class="d-flex">
+
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Time:&nbsp;&nbsp;
+                            </h6>
+                            <h6 class="card-subtitle mb-2 text-primary">
+                                {{ $vendor->created_at }}
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h3>Reports</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered p-4 w-100 report-table" id="vendorReports"
+                    vendorReport-url="{{ route('vendors.show', $vendor) }}">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Purchase</th>
+                            <th>Payment</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="row">

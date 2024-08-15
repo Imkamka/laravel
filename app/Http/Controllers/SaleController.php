@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Customer;
+use App\Models\Purchase;
 use App\Models\SaleItem;
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class SaleController extends Controller
@@ -13,7 +17,7 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Sale::query()
+            $data = Sale::where('sales.is_deleted', 0)
                 ->join('customers', 'sales.customer_id', '=', 'customers.id')
                 ->select('sales.*', 'customers.company')
                 ->get();
@@ -42,39 +46,66 @@ class SaleController extends Controller
     }
     public function create()
     {
+        // if (!empty(Customer::where('is_deleted', 0)->count())) {
         return view('admin.sales.create');
+        // }
+        // return redirect()->route('customers.create')->with('error', 'Customer is required');
     }
     public function store(Request $request)
     {
         $customer_id = $request->input('customer_id');
-        // Calculate the sum of total_price
-        $items = $request->input('items');
-        $total_price = 0;
-        foreach ($items as $item) {
-            $total_price += $item['total_price'];
-        }
-
-        // dd($total_price);
-        $sale = Sale::create([
-            'customer_id' => $customer_id,
-            'total_price' => $total_price,
-            'is_active' => 1,
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required'
         ]);
+        if ($validator->passes()) {
+            // Calculate the sum of total_price
+            $items = $request->input('items');
+            $total_price = 0;
+            foreach ($items as $item) {
+                $total_price += $item['total_price'];
+            }
 
-        $sale_id = $sale->id;
-
-        foreach ($request->input('items') as $item) {
-            SaleItem::create([
-                'sale_id' => $sale_id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'unit_price' => $item['unit_price'],
-                'total_price' => $item['total_price'],
+            // dd($total_price);
+            $sale = Sale::create([
+                'customer_id' => $customer_id,
+                'total_price' => $total_price,
+                'is_active' => 1,
             ]);
-        }
-        Session::flash('success', 'Sale created');
 
-        return redirect()->route('sales.index');
+            $sale_id = $sale->id;
+
+            foreach ($request->input('items') as $item) {
+                SaleItem::create([
+                    'sale_id' => $sale_id,
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_price' => $item['unit_price'],
+                    'total_price' => $item['total_price'],
+                ]);
+            }
+            $productId = $item['product_id'];
+            $qtySold = $item['quantity'];
+            //Product count items after sold
+            $productItems = PurchaseItem::where('product_id', $productId)->get();
+            foreach ($productItems as $item) {
+                if (
+                    $item->quantity >= $qtySold
+                ) {
+                    $item->quantity -= $qtySold;
+                    $item->save();
+                    break;
+                } else {
+                    $qtySold -= $item->quantity;
+                    $item->quantity = 0;
+                    $item->save();
+                }
+            }
+
+            Session::flash('success', 'Sale created');
+
+            return redirect()->route('sales.index');
+        }
+        return back()->withErrors($validator);
     }
     public function show($id)
     {
@@ -85,7 +116,9 @@ class SaleController extends Controller
     public function destroy($id)
     {
         $sale = Sale::findOrFail($id);
-        $sale->destroy($sale->id);
+        $sale->is_deleted = 1;
+        $sale->delete_at = now();
+        $sale->save();
         Session::flash('success', 'Sale deleted');
         return redirect()->route('sales.index');
     }

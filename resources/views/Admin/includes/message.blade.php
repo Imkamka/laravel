@@ -1,33 +1,37 @@
-const swalWithBootstrapButtons = Swal.mixin({
-customClass: {
-confirmButton: "btn btn-success",
-cancelButton: "btn btn-danger"
-},
-buttonsStyling: false
-});
-swalWithBootstrapButtons.fire({
-title: "Are you sure?",
-text: "You won't be able to revert this!",
-icon: "warning",
-showCancelButton: true,
-confirmButtonText: "Yes, delete it!",
-cancelButtonText: "No, cancel!",
-reverseButtons: true
-}).then((result) => {
-if (result.isConfirmed) {
-swalWithBootstrapButtons.fire({
-title: "Deleted!",
-text: "Your file has been deleted.",
-icon: "success"
-});
-} else if (
-/* Read more about handling dismissals below */
-result.dismiss === Swal.DismissReason.cancel
-) {
-swalWithBootstrapButtons.fire({
-title: "Cancelled",
-text: "Your imaginary file is safe :)",
-icon: "error"
-});
-}
-});
+ @if (Session::has('success'))
+     <script>
+         Toastify({
+             text: "{{ Session::get('success') }}",
+             duration: 3000,
+             newWindow: true,
+             close: true,
+             gravity: "top", // `top` or `bottom`
+             position: "right", // `left`, `center` or `right`
+             stopOnFocus: true, // Prevents dismissing of toast on hover
+             style: {
+                 background: "#28a745",
+             },
+             onClick: function() {} // Callback after click
+         }).showToast();
+     </script>
+ @endif
+ @if (Session::has('error'))
+     <script>
+         Toastify({
+             text: "{{ Session::get('error') }}",
+             duration: 3000,
+             newWindow: true,
+             close: true,
+             gravity: "bottom", // `top` or `bottom`
+             position: "right", // `left`, `center` or `right`
+             stopOnFocus: true, // Prevents dismissing of toast on hover
+             style: {
+                 background: "#e3342f",
+                 width: "444px",
+                 display: 'flex',
+                 justifyContent: 'space-between'
+             },
+             onClick: function() {} // Callback after click
+         }).showToast();
+     </script>
+ @endif

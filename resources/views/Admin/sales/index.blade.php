@@ -1,5 +1,5 @@
 @extends('Admin.layout.app')
-@section('title', 'Purchases')
+@section('title', 'Sales')
 @section('content')
     <div class="container-fluid">
         <div class="row">

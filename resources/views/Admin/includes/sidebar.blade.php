@@ -52,7 +52,15 @@
                 </ul>
             </li>
 
-
+            <li class="item mb-3">
+                <a href="{{ route('expenses.index') }}"
+                    class="nav_link {{ Route::is('expenses.index') ? 'active' : ' ' }}">
+                    <span class="navlink_icon">
+                        <i class='bx bx-dollar-circle'></i>
+                    </span>
+                    <span class="navlink">Expenses</span>
+                </a>
+            </li>
             <li class="item mb-3">
                 <div href="#" class="nav_link submenu_item">
                     <span class="navlink_icon">
@@ -64,10 +72,10 @@
                 </div>
                 <ul class="menu_items submenu">
                     <a href="#" class="nav_link sublink">Overview</a>
-                    <a href="#" class="nav_link sublink">Purchases</a>
-                    <a href="#" class="nav_link sublink">Sales</a>
-                    <a href="#" class="nav_link sublink">Payments</a>
-                    <a href="#" class="nav_link sublink">Expenses</a>
+                    <a href="{{ route('purchases.report') }}" class="nav_link sublink">Purchases</a>
+                    <a href="{{ route('sales.report') }}" class="nav_link sublink">Sales</a>
+                    <a href="{{ route('payments.report') }}" class="nav_link sublink">Payments</a>
+                    <a href="{{ route('expenses.report') }}" class="nav_link sublink">Expenses</a>
                 </ul>
             </li>
             <li class="item mb-3">

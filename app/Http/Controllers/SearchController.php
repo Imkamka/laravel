@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Vendor;
 use Illuminate\Http\Request;

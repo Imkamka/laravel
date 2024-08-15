@@ -16,10 +16,10 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Purchase::query()
+            $data = Purchase::where('purchases.is_deleted', 0)
                 ->join('vendors', 'purchases.vendor_id', '=', 'vendors.id') // Join vendors table
                 ->select('purchases.*', 'vendors.company') // Select all columns from purchases and company_name from vendors
-                ->get();;
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -45,6 +45,7 @@ class PurchaseController extends Controller
     }
     public function create()
     {
+
         return view('admin.purchases.create');
     }
 
@@ -96,7 +97,9 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         $purchase = Purchase::findOrFail($id);
-        $purchase->destroy($purchase->id);
+        $purchase->is_deleted = 1;
+        // $purchase->deleted_at = now();
+        $purchase->save();
         Session::flash('success', 'Purchase deleted');
         return redirect()->route('purchases.index');
     }

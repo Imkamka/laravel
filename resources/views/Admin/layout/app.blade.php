@@ -51,23 +51,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     {{-- Alert message session  --}}
-    @if (Session::has('success'))
-        <script>
-            Toastify({
-                text: "{{ Session::get('success') }}",
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "#28a745",
-                },
-                onClick: function() {} // Callback after click
-            }).showToast();
-        </script>
-    @endif
+    @include('admin.includes.message')
     @stack('script')
 </body>
 

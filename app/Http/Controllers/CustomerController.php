@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Sale;
+use App\Models\SalePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
@@ -16,7 +18,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Customer::query();
+            $data = Customer::where('is_deleted', 0)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -48,6 +50,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
+
         return view('admin.customers.create');
     }
 
@@ -60,6 +63,7 @@ class CustomerController extends Controller
             'full_name' => 'required|min:3',
             'email' => 'email|unique:vendors,email,except,id'
         ]);
+
         if ($validator->passes()) {
 
             $customers = new Customer();
@@ -71,6 +75,7 @@ class CustomerController extends Controller
             $customers->ntn = $request->ntn;
             $customers->is_active = $request->is_active;
             $customers->save();
+
             Session::flash('success', 'Customer added');
             return redirect()
                 ->route('customers.index');
@@ -83,9 +88,81 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Request $request, Customer $customer)
     {
-        return view('admin.customers.show', compact('customer'));
+
+        if ($request->ajax()) {
+            $sales = Sale::where('customer_id', $customer->id)
+                ->get()
+                ->map(function ($sale) {
+                    $sale->type = "sale";
+                    $sale->total_price = $sale->total_price ?? 0;
+                    $sale->created_at = $sale->created_at;
+                    $sale->balance = 0;
+                    return $sale;
+                });
+            $salePayments = SalePayment::where('customer_id', $customer->id)
+                ->get()
+                ->map(function ($payment) {
+                    $payment->type = 'payment';
+                    $payment->amount = $payment->amount;
+                    $payment->balance = 0;
+                    $payment->created_at = $payment->created_at;
+                    return $payment;
+                });
+
+            // Merge and sort the data by created_at
+            $data = $sales
+                ->merge($salePayments)
+                ->sortBy('created_at');
+
+            $paid_balance = 0;
+            $total_balance = 0;
+            $data = $data->map(function ($item) use (&$paid_balance, &$total_balance) {
+                $total_balance += $item->total_price;
+                $paid_balance += $item->amount;
+                // $balance = $paid_balance - $item->total_price;
+                $item->totalBalance = $total_balance;
+                $item->balance = $paid_balance;
+                return $item;
+            });
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('type', function ($row) {
+                    return $row->type == 'sale' ? 'Sale' : 'Payment'; // Returns either 'Purchase' or 'Payment'
+                })
+                ->addColumn('created_at', function ($row) {
+                    return $row->created_at;
+                })
+                ->addColumn('total_price', function ($row) {
+                    return $row->total_price ?? '0.00';
+                })
+                ->addColumn('amount', function ($row) {
+                    return $row->amount ?? '0.00';
+                })
+                ->addColumn('balance', function ($row) {
+                    return number_format($row->balance - $row->totalBalance, 2);
+                })
+                ->make(true);
+        }
+        $customer = Customer::with(['sale', 'salePayment'])->findOrFail($customer->id);
+
+        $customerInvoice = $customer->sale->sum('total_price');
+        $customerPaidAmount = $customer->salePayment->sum('amount');
+        $customerBalance = $customerPaidAmount - $customerInvoice;
+
+        return view(
+            'admin.customers.show',
+            compact(
+                [
+                    'customer',
+                    'customerInvoice',
+                    'customerPaidAmount',
+                    'customerBalance'
+                ]
+            )
+        );
     }
 
     /**
@@ -128,7 +205,9 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->destroy($customer->id);
+        $customer->is_deleted = 1;
+        $customer->deleted_at = now();
+        $customer->save();
         Session::flash('success', 'Customer deleted');
         return redirect()->route('customers.index');
     }

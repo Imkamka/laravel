@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Vendor;
+use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
+use App\Models\PurchasePayment;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +20,7 @@ class VendorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Vendor::query();
+            $data = Vendor::where('is_deleted', 0)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -48,6 +52,7 @@ class VendorController extends Controller
      */
     public function create()
     {
+
         return view('admin.vendors.create');
     }
 
@@ -82,10 +87,81 @@ class VendorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        $vendor = Vendor::findOrFail($id);
-        return view('Admin.vendors.show', compact('vendor'));
+
+        if ($request->ajax()) {
+            $purchases = Purchase::where('vendor_id', $id)
+                ->get()
+                ->map(function ($purchase) {
+                    $purchase->type = "purchase";
+                    $purchase->total_price = $purchase->total_price ?? 0;
+                    $purchase->created_at = $purchase->created_at;
+                    $purchase->balance = 0;
+                    return $purchase;
+                });
+            $purchasePayments = PurchasePayment::where('vendor_id', $id)
+                ->get()
+                ->map(function ($payment) {
+                    $payment->type = 'payment';
+                    $payment->amount = $payment->amount;
+                    $payment->balance = 0;
+                    $payment->created_at = $payment->created_at;
+                    return $payment;
+                });
+
+            // Merge and sort the data by created_at
+            $data = $purchases
+                ->merge($purchasePayments)
+                ->sortBy('created_at');
+            $paid_balance = 0;
+            $total_balance = 0;
+            $data = $data->map(function ($item) use (&$paid_balance, &$total_balance) {
+                $total_balance += $item->total_price;
+                $paid_balance += $item->amount;
+                // $balance = $paid_balance - $item->total_price;
+                $item->totalBalance = $total_balance;
+                $item->balance = $paid_balance;
+                return $item;
+            });
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('type', function ($row) {
+                    return $row->type == 'purchase' ? 'Purchase' : 'Payment'; // Returns either 'Purchase' or 'Payment'
+                })
+                ->addColumn('created_at', function ($row) {
+                    return $row->created_at;
+                })
+                ->addColumn('total_price', function ($row) {
+                    return $row->total_price ?? '0.00';
+                })
+                ->addColumn('amount', function ($row) {
+                    return $row->amount ?? '0.00';
+                })
+                ->addColumn('balance', function ($row) {
+                    return number_format($row->balance - $row->totalBalance, 2);
+                })
+                ->make(true);
+        }
+
+
+        $vendor = Vendor::with(['purchase', 'payment'])->findOrFail($id);
+        $vendorInvoice = $vendor->purchase->sum('total_price');
+        $vendorPaidAmount = $vendor->payment->sum('amount');
+        $vendorBalance = $vendorPaidAmount - $vendorInvoice;
+
+        return view(
+            'admin.vendors.show',
+            compact(
+                [
+                    'vendor',
+                    'vendorInvoice',
+                    'vendorPaidAmount',
+                    'vendorBalance'
+                ]
+            )
+        );
     }
 
     /**
@@ -130,7 +206,9 @@ class VendorController extends Controller
     public function destroy(string $id)
     {
         $vendor = Vendor::findOrFail($id);
-        $vendor->destroy($vendor->id);
+        $vendor->is_deleted = 1;
+        $vendor->deleted_at = now();
+        $vendor->save();
         Session::flash('success', 'Vendor deleted');
         return redirect()->route('vendors.index');
     }

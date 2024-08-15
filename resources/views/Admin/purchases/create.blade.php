@@ -51,6 +51,7 @@
                                         </thead>
                                         <tbody id="cartTableBody">
                                             <!-- Dynamic rows will be appended here -->
+
                                         </tbody>
                                     </table>
                                     <div class="text-end">
