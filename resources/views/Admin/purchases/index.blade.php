@@ -20,9 +20,9 @@
                     purchase-url="{{ route('purchases.index') }}">
                     <thead>
                         <tr>
+                            <td>ID</td>
                             <th>Vendor</th>
                             <th>Total price</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>

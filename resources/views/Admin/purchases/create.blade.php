@@ -12,11 +12,11 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mb-3">
-                <form action="{{ route('purchases.store') }}" method="POST" id="checkoutForm">
-                    @method('POST')
-                    @csrf
+        <form action="{{ route('purchases.store') }}" method="POST" id="checkoutForm">
+            @method('POST')
+            @csrf
+            <div class="row">
+                <div class="col-lg-8 mb-3">
 
                     {{-- Product id  --}}
 
@@ -29,7 +29,7 @@
                                     <div class="col-sm-12">
                                         <input type="text" placeholder="Search Product" id="productSearchInput"
                                             class="form-control w-100">
-                                        <div id="searchResults"></div>
+                                        <div id="searchResults" class="shadow-lg"></div>
                                     </div>
                                 </div>
                             </div>
@@ -62,41 +62,43 @@
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
 
-            <!-- Vendor and Summary Section -->
-            <div class="col-lg-4 mb-3">
-                <div class="card shadow" id="summaryCard">
-                    <div class="card-body p-4">
-                        <!-- Vendor Search -->
-                        <div id="searchVendorForm" autocomplete="off">
-                            <input type="text" placeholder="Search vendor" id="vendorSearchInput"
-                                class="form-control w-100 mb-3">
-                            <div id="searchVendorResults"></div>
-                        </div>
+                <!-- Vendor and Summary Section -->
+                <div class="col-lg-4 mb-3">
+                    <div class="card shadow" id="summaryCard">
+                        <div class="card-body p-4">
+                            <!-- Vendor Search -->
+                            <div id="searchVendorForm" autocomplete="off">
+                                <div class="col-sm-12">
+                                    <input type="text" placeholder="Search vendor" id="vendorSearchInput"
+                                        class="form-control w-100 mb-3">
+                                    <div id="searchVendorResults" class="shadow-lg"></div>
+                                </div>
 
-                        <!-- Summary -->
-                        <h5 class="card-title"><strong>Summary</strong></h5>
-                        <hr>
+                            </div>
 
-                        <div class="text-left">
-                            <input type="hidden" id="vendor_id" name="vendor_id">
-                            <strong>Company </strong><span id="selectedVendor" name="company">None</span>
+                            <!-- Summary -->
+                            <h5 class="card-title"><strong>Summary</strong></h5>
+                            <hr>
+
+                            <div class="text-left">
+                                <input type="hidden" id="vendor_id" name="vendor_id">
+                                <strong>Company </strong><span id="selectedVendor" name="company">None</span>
+                            </div>
+                            <hr>
+                            <div class="text-left">
+                                <strong>Total price </strong><span id="summaryTotalPrice">0.00</span>
+                                {{-- <input type="hidden" id="total_price" name="total"> --}}
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mt-3" id="checkoutButton">Checkout</button>
                         </div>
-                        <hr>
-                        <div class="text-left">
-                            <strong>Total price </strong><span id="summaryTotalPrice">0.00</span>
-                            {{-- <input type="hidden" id="total_price" name="total"> --}}
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-3" id="checkoutButton">Checkout</button>
-                        </form>
                     </div>
                 </div>
             </div>
-            {{-- </form> --}}
-
-        </div>
-
+        </form>
+    </div>
 
 
-    @endsection
+
+@endsection

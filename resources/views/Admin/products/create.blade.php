@@ -17,20 +17,10 @@
                             class="form-control @error('name')
                             is-invalid
                         @enderror"
-                            id="inputProductName4" name="name" placeholder="Enter product name">
+                            id="inputProductName4" name="name" placeholder="Enter product name"
+                            value="{{ old('name') }}">
                         @error('name')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="inputDescription4" class="form-label">Description</label>
-                        <input type="Description"
-                            class="form-control @error('description')
-                            is-invalid
-                        @enderror"
-                            name="description" id="inputDescription4" placeholder="Enter product description">
-                        @error('description')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -45,9 +35,21 @@
                             <option value="Protein">Protein</option>
                         </select>
                         @error('type')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="inputDescription4" class="form-label">Description</label>
+                        <textarea type="Description"
+                            class="form-control @error('description')
+                            is-invalid
+                        @enderror"
+                            name="description" id="inputDescription4" placeholder="Enter product description">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
 
                     <div class="col-12 mb-3">
                         <button type="submit" class="btn btn-primary">Save</button>

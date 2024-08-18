@@ -10,10 +10,10 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row shadow-lg rounded-3 p-4">
             <div class="col-12">
                 <div class="card shadow-sm p-4">
-                    <div class="card-body">
+                    <div class="card-body p-5">
                         <h5 class="card-title mb-3"><strong>Payment informations</strong></h5>
                         <div class="d-flex">
                             <h6 class="card-subtitle mb-2 text-body-secondary ">Payment ID:&nbsp;&nbsp;</h6>

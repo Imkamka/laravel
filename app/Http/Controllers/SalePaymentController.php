@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\SalePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class SalePaymentController extends Controller
@@ -60,11 +61,18 @@ class SalePaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $payments = new SalePayment();
-        $payments->customer_id = $request->customer;
-        $payments->amount = $request->amount;
-        $payments->description = $request->description;
-        $payments->save();
+
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required',
+            'amount' => 'required',
+            'description' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        SalePayment::create($validator->validated());
+
         Session::flash('success', 'Sale payment created');
 
         return redirect()

@@ -20,9 +20,9 @@
                     sales-url="{{ route('sales.index') }}">
                     <thead>
                         <tr>
-                            <th>Customer</th>
+                            <th>ID</th>
+                            <th>Company</th>
                             <th>Total price</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>

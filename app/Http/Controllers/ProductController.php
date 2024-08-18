@@ -20,22 +20,22 @@ class ProductController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '
+                    $btnEdit = '
                     <div class="product-actions d-flex justify-content-center ">
                     <a href="' . route('products.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
-                    $btn .= '
+                    $btnDel = '
                     <form action="' . route('products.destroy', $row) . '" method="POST">
                       ' . csrf_field() . '
                       ' . method_field('DELETE') . '
                     <button type="submit" class="delete btn btn-danger btn-sm" id="deleteBtn"><i class="bx bx-trash-alt" ></i></button>
                    </form>&nbsp
                     ';
-                    $btn .= '
+                    $btnShow = '
                     <div class="product-actions d-flex justify-content-center ">
                     <a href="' . route('products.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
                    </div>
                     ';
-                    return $btn;
+                    return $btnEdit . $btnDel . $btnShow;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -58,19 +58,16 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
+            'description' => 'required',
+            'type' => 'required'
         ]);
-        if ($validator->passes()) {
-            $products = new Product();
-            $products->name = $request->name;
-            $products->description = $request->description;
-            $products->type = $request->type;
-            $products->save();
-            Session::flash('success', 'Product added');
-            return redirect()
-                ->route('products.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+        Product::create($validator->validated());
+        Session::flash('success', 'Product added');
+        return redirect()
+            ->route('products.index');
     }
 
     /**
@@ -98,19 +95,18 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
+            'description' => 'required',
+            'type' => 'required'
         ]);
-        if ($validator->passes()) {
-            $product = Product::find($id);
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->type = $request->type;
-            $product->save();
-            Session::flash('success', 'Product Updated');
-            return redirect()
-                ->route('products.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+
+        $product = Product::find($id);
+        $product->update($validator->validated());
+        Session::flash('success', 'Product Updated');
+        return redirect()
+            ->route('products.index');
     }
 
     /**

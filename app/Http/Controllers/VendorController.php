@@ -24,22 +24,22 @@ class VendorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '
+                    $btnEdit = '
                     <div class="product-actions d-flex justify-content-center ">
                     <a href="' . route('vendors.edit', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bxs-edit" ></i></a>&nbsp';
-                    $btn .= '
+                    $btnDel = '
                     <form action="' . route('vendors.destroy', $row) . '" method="POST">
                       ' . csrf_field() . '
                       ' . method_field('DELETE') . '
                     <button type="submit" class="delete btn btn-danger btn-sm" id="deleteBtn"><i class="bx bx-trash-alt" ></i></button>
                    </form>&nbsp
                     ';
-                    $btn .= '
+                    $btnShow = '
                     <div class="product-actions d-flex justify-content-center ">
                     <a href="' . route('vendors.show', $row) . '" class="edit btn btn-primary btn-sm"><i class="bx bx-info-circle" ></i></a>&nbsp
                    </div>
                     ';
-                    return $btn;
+                    return $btnEdit . $btnDel . $btnShow;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -63,25 +63,19 @@ class VendorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|min:3',
-            'email' => 'email|unique:vendors,email,except,id'
+            'email' => 'email|unique:vendors,email,except,id',
+            'company' => 'required',
+            'phone' => 'required|integer',
+            'ntn' => 'required',
+            'address' => 'required'
         ]);
-        if ($validator->passes()) {
-
-            $vendors = new Vendor();
-            $vendors->full_name = $request->full_name;
-            $vendors->email = $request->email;
-            $vendors->phone = $request->phone;
-            $vendors->address = $request->address;
-            $vendors->company = $request->company;
-            $vendors->ntn = $request->ntn;
-            $vendors->is_active = $request->is_active;
-            $vendors->save();
-            Session::flash('success', 'Vendor created');
-            return redirect()
-                ->route('vendors.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+        Vendor::create($validator->validated());
+        Session::flash('success', 'Vendor created');
+        return redirect()
+            ->route('vendors.index');
     }
 
     /**
@@ -180,24 +174,21 @@ class VendorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|min:3',
+            'email' => 'email|unique:vendors,email,except,id',
+            'company' => 'required',
+            'phone' => 'required|integer',
+            'ntn' => 'required',
+            'address' => 'required'
         ]);
-        if ($validator->passes()) {
-            $vendors = Vendor::findOrFail($id);
-            $vendors->full_name = $request->full_name;
-            $vendors->email = $request->email;
-            $vendors->phone = $request->phone;
-            $vendors->address = $request->address;
-            $vendors->company = $request->company;
-            $vendors->ntn = $request->ntn;
-            $vendors->is_active = $request->is_active;
-            $vendors->save();
-            Session::flash('success', 'Vendor updated');
-
-            return redirect()
-                ->route('vendors.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+        $vendor = Vendor::findOrFail($id);
+        $vendor->update($validator->validated());
+        Session::flash('success', 'Vendor updated');
+
+        return redirect()
+            ->route('vendors.index');
     }
 
     /**

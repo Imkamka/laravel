@@ -65,7 +65,15 @@ $(document).ready(function () {
         serverSide: true,
         ajax: url,
         columns: [
-            { data: 'id', name: 'id' },
+            {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
             { data: 'name', name: 'name' },
             { data: 'description', name: 'description' },
             { data: 'type', name: 'type' },
@@ -78,9 +86,17 @@ $(document).ready(function () {
         serverSide: true,
         ajax: vendorUrl,
         columns: [
-            { data: 'full_name', name: 'full_name' },
-            { data: 'email', name: 'email' },
+            {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
             { data: 'company', name: 'company' },
+            { data: 'address', name: 'address' },
 
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
@@ -109,18 +125,20 @@ $(document).ready(function () {
         ajax: purchaseUrl,
         columns: [
             {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
+            {
                 data: 'company',
                 name: 'company',
 
             },
             { data: 'total_price', name: 'total_price' },
-            {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data) {
-                    return data == 1 ? 'Active' : 'Inactive'
-                }
-            },
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });
@@ -132,9 +150,17 @@ $(document).ready(function () {
         serverSide: true,
         ajax: customerUrl,
         columns: [
-            { data: 'full_name', name: 'full_name' },
-            { data: 'email', name: 'email' },
+            {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
             { data: 'company', name: 'company' },
+            { data: 'address', name: 'address' },
 
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
@@ -163,24 +189,27 @@ $(document).ready(function () {
         ajax: saleUrl,
         columns: [
             {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
+            {
                 data: 'company',
                 name: 'company',
 
             },
             { data: 'total_price', name: 'total_price' },
-            {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data) {
-                    return data == 1 ? 'Active' : 'Inactive'
-                }
-            },
+
             { data: 'action', name: 'action', orderable: true, searchable: true },
         ]
     });
 
     const purchasePaymentURL = $('#purchasePayments').attr('payments-url');
-    //sales table
+    //purchase payments
     $('#purchasePayments').DataTable({
         processing: true,
         serverSide: true,
@@ -198,12 +227,21 @@ $(document).ready(function () {
     });
 
     const salePaymentURL = $('#salePayments').attr('salePayments-url');
-    //sales table
+    //sales payment
     $('#salePayments').DataTable({
         processing: true,
         serverSide: true,
         ajax: salePaymentURL,
         columns: [
+            {
+                data: null,
+                name: 'index',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
             {
                 data: 'company',
                 name: 'company',
@@ -332,7 +370,6 @@ let purchaseSearchProduct = document.getElementById('purchaseSearchProduct');
 if (purchaseSearchProduct) {
     purchaseSearchProduct.addEventListener('input', function () {
         let query = this.value.trim();
-        console.log(query);
         if (query.length > 0) {
             fetch(`/purchase-search?purchaseQuery=${query}`)
                 .then(response => response.json())
@@ -342,7 +379,6 @@ if (purchaseSearchProduct) {
                     if (data.length > 0) {
                         resultsDiv.style.display = 'block';
                         data.forEach(item => {
-                            console.log(item.product['name']);
                             let divItem = document.createElement('div');
                             divItem.textContent = item.product['name'];
                             divItem.style.padding = '8px';
@@ -355,15 +391,25 @@ if (purchaseSearchProduct) {
                             resultsDiv.appendChild(divItem);
                         });
                     } else {
-                        resultsDiv.style.display = 'none';
+                        resultsDiv.style.display = 'block'; // Show the results div
+                        let noDataDiv = document.createElement('div');
+                        noDataDiv.textContent = 'No data found';
+                        noDataDiv.style.padding = '8px';
+                        noDataDiv.style.color = 'red';
+                        resultsDiv.appendChild(noDataDiv);
                     }
                 });
         } else {
             document.getElementById('searchResults').style.display = 'none';
         }
+
+        document.addEventListener('click', function (e) {
+            if (!document.getElementById('checkoutSaleForm').contains(e.target)) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
         //adding Purchased product into carts
         function addToCartPurchase(item) {
-            console.log(item);
             let cartTableBody = document.getElementById('cartTableBody');
             let rowCount = cartTableBody.getElementsByTagName('tr').length;
             let newRow = document.createElement('tr');
@@ -442,21 +488,25 @@ if (customerSearchInput) {
                         resultsDiv.style.display = 'block';
                         data.forEach(item => {
                             let divItem = document.createElement('div');
+                            divItem.textContent = item.company;
                             divItem.style.padding = '8px';
                             divItem.style.cursor = 'pointer';
                             divItem.addEventListener('click', function () {
                                 document.getElementById('customerSearchInput').value = '';
+                                resultsDiv.style.display = 'none';
                                 document.getElementById('selectedCustomer').textContent = item.company; // Update selected customer in summary
                                 document.getElementById('customer_id').value = item.id;
-                                document.getElementById('productInput').value = item.product['name'
-
-                                ];
-                                resultsDiv.style.display = 'none';
+                                document.getElementById('productInput').value = item.product['name'];
                             });
                             resultsDiv.appendChild(divItem);
                         });
                     } else {
-                        resultsDiv.style.display = 'none';
+                        resultsDiv.style.display = 'block'; // Show the results div
+                        let noDataDiv = document.createElement('div');
+                        noDataDiv.textContent = 'No data found';
+                        noDataDiv.style.padding = '8px';
+                        noDataDiv.style.color = 'red';
+                        resultsDiv.appendChild(noDataDiv);
                     }
                 });
         } else {
@@ -464,13 +514,56 @@ if (customerSearchInput) {
         }
     });
     //customer search form
-    // document.addEventListener('click', function (e) {
-    //     if (!document.getElementById('searchCustomerForm').contains(e.target)) {
-    //         document.getElementById('searchCustomerResults').style.display = 'none';
-    //     }
-    // });
+    document.addEventListener('click', function (e) {
+        if (!document.getElementById('searchCustomerForm').contains(e.target)) {
+            document.getElementById('searchCustomerResults').style.display = 'none';
+        }
+    });
 }
+//sale validation submission
+let saleCheckout = document.getElementById('checkoutSaleForm');
+if (saleCheckout) {
+    saleCheckout.addEventListener('submit', function (event) {
 
+        // Check if there are items in the cart
+        let cartTableBody = document.getElementById('cartTableBody');
+        let cartItems = cartTableBody.getElementsByTagName('tr');
+
+        // Check if the vendor is selected
+        let vendorId = document.getElementById('customer_id').value;
+
+        // Validate cart items
+        if (cartItems.length === 0) {
+            alert('Please add at least one product to the cart.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        // Validate vendor selection
+        if (!vendorId) {
+            alert('Please select a company.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        let invalidInput = false;
+        cartTableBody.querySelectorAll('tr').forEach(row => {
+            let quantity = row.querySelector('.quantity').value;
+            let price = row.querySelector('.price').value;
+
+            if (quantity <= 0 || price < 0) {
+                alert('Please enter valid quantities and prices for all items.');
+                invalidInput = true;
+            }
+        });
+
+        if (invalidInput) {
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+    });
+}
 //Vendors and Product cart
 document.addEventListener('DOMContentLoaded', function () {
     let productSearchInput = document.getElementById('productSearchInput');
@@ -498,7 +591,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 resultsDiv.appendChild(divItem);
                             });
                         } else {
-                            resultsDiv.style.display = 'none';
+                            resultsDiv.style.display = 'block'; // Show the results div
+                            let noDataDiv = document.createElement('div');
+                            noDataDiv.textContent = 'No data found';
+                            noDataDiv.style.padding = '8px';
+                            noDataDiv.style.color = 'red';
+                            resultsDiv.appendChild(noDataDiv);
                         }
                     });
             } else {
@@ -515,10 +613,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         function addToCart(item) {
+
             let cartTableBody = document.getElementById('cartTableBody');
             let rowCount = cartTableBody.getElementsByTagName('tr').length;
             let newRow = document.createElement('tr');
-
             let customPrice = 0.00; // Default price value
             let quantity = 1;
             let totalPrice = customPrice * quantity;
@@ -606,16 +704,76 @@ document.addEventListener('DOMContentLoaded', function () {
                                 resultsDiv.appendChild(divItem);
                             });
                         } else {
-                            resultsDiv.style.display = 'none';
+                            resultsDiv.style.display = 'block'; // Show the results div
+                            let noDataDiv = document.createElement('div');
+                            noDataDiv.textContent = 'No data found';
+                            noDataDiv.style.padding = '8px';
+                            noDataDiv.style.color = 'red';
+                            resultsDiv.appendChild(noDataDiv);
                         }
                     });
             } else {
                 document.getElementById('searchVendorResults').style.display = 'none';
             }
+            document.addEventListener('click', function (event) {
+                let resultsDiv = document.getElementById('searchVendorResults');
+                let searchInput = document.getElementById('vendorSearchInput');
+
+                // Check if the click was outside the results div and the search input
+                if (!resultsDiv.contains(event.target) && event.target !== searchInput) {
+                    resultsDiv.style.display = 'none';
+                }
+            });
         });
     }
 
 })
+// Add event listener for form submission
+let purchaseCheckout = document.getElementById('checkoutForm');
+//validate before submission purhcase
+if (purchaseCheckout) {
+    purchaseCheckout.addEventListener('submit', function (event) {
+        // Check if there are items in the cart
+        let cartTableBody = document.getElementById('cartTableBody');
+        let cartItems = cartTableBody.getElementsByTagName('tr');
+
+        // Check if the vendor is selected
+        let vendorId = document.getElementById('vendor_id').value;
+
+        // Validate cart items
+        if (cartItems.length === 0) {
+            alert('Please add at least one product to the cart.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        // Validate vendor selection
+        if (!vendorId) {
+            alert('Please select a vendor.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        // Optionally, you can also check if all quantities and prices are valid
+        let invalidInput = false;
+        cartTableBody.querySelectorAll('tr').forEach(row => {
+            let quantity = row.querySelector('.quantity').value;
+            let price = row.querySelector('.price').value;
+
+            if (quantity <= 0 || price < 0) {
+                alert('Please enter valid quantities and prices for all items.');
+                invalidInput = true;
+            }
+        });
+
+        if (invalidInput) {
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+    });
+}
+
+
 
 //Sweet alert message
 document.addEventListener('DOMContentLoaded', function () {

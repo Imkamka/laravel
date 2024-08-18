@@ -61,27 +61,20 @@ class CustomerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|min:3',
-            'email' => 'email|unique:vendors,email,except,id'
+            'email' => 'email|unique:vendors,email,except,id',
+            'company' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'ntn' => 'required'
         ]);
 
-        if ($validator->passes()) {
-
-            $customers = new Customer();
-            $customers->full_name = $request->full_name;
-            $customers->email = $request->email;
-            $customers->phone = $request->phone;
-            $customers->address = $request->address;
-            $customers->company = $request->company;
-            $customers->ntn = $request->ntn;
-            $customers->is_active = $request->is_active;
-            $customers->save();
-
-            Session::flash('success', 'Customer added');
-            return redirect()
-                ->route('customers.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+        Customer::create($validator->validated());
+        Session::flash('success', 'Customer added');
+        return redirect()
+            ->route('customers.index');
     }
 
 
@@ -178,26 +171,25 @@ class CustomerController extends Controller
      */
     public function update(Request $request,  $customer)
     {
+        $customer = Customer::findOrFail($customer);
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|min:3',
+            'email' => 'email|unique:vendors,email,except,id',
+            'company' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'ntn' => 'required'
         ]);
-        if ($validator->passes()) {
-            $customers = Customer::findOrFail($customer);
-            $customers->full_name = $request->full_name;
-            $customers->email = $request->email;
-            $customers->phone = $request->phone;
-            $customers->address = $request->address;
-            $customers->company = $request->company;
-            $customers->ntn = $request->ntn;
-            $customers->is_active = $request->is_active;
-            $customers->save();
-            Session::flash('success', 'Customer updated');
 
-            return redirect()
-                ->route('customers.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return back()
-            ->withErrors($validator);
+
+        $customer->update($validator->validated());
+        Session::flash('success', 'Customer updated');
+
+        return redirect()
+            ->route('customers.index');
     }
 
     /**

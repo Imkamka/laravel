@@ -20,7 +20,7 @@
                             id="inputProductName4" name="name" placeholder="Enter product name"
                             value="{{ $product->name }}">
                         @error('name')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -32,7 +32,7 @@
                             name="description" id="inputDescription4" placeholder="Enter product description"
                             value="{{ $product->description }}">
                         @error('description')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -43,11 +43,11 @@
                         @enderror"
                             name="type">
                             <option selected disabled>Select product type</option>
-                            <option value="Cash" {{ $product->type === 'Milk' ? 'selected' : '' }}> Milk </option>
-                            <option value="Lator on" {{ $product->type === 'Protein' ? 'selected' : '' }}>Protein</option>
+                            <option value="Milk" {{ $product->type === 'Milk' ? 'selected' : '' }}> Milk </option>
+                            <option value="Protein" {{ $product->type === 'Protein' ? 'selected' : '' }}>Protein</option>
                         </select>
                         @error('type')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 

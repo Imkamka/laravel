@@ -11,23 +11,7 @@
 
         </div>
         <div class="row">
-            <div class="col-lg-4 mb-3">
-                <div class="card shadow d-card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-auto me-auto">
-                                <h5 class="card-title">Balance</h5>
-                            </div>
-                            <div class="col-auto"><i class='bx bx-wallet-alt wallet'></i></div>
-                        </div>
-                        <h1 class="pkr">{{ $total_balance }} PKR</h1>
-                        <a href="{{ route('view.dashboard') }}" class="card-link nav-link">
-                            <i class='bx bx-bar-chart-square arrow'></i>&nbsp;Sales:120 &nbsp;<i
-                                class='bx bx-chevrons-right arrow'></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-lg-4 mb-3">
                 <div class="card shadow d-card">
                     <div class="card-body">
@@ -62,7 +46,23 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-lg-4 mb-3">
+                <div class="card shadow d-card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto me-auto">
+                                <h5 class="card-title">Balance</h5>
+                            </div>
+                            <div class="col-auto"><i class='bx bx-wallet-alt wallet'></i></div>
+                        </div>
+                        <h1 class="pkr">{{ $total_balance }} PKR</h1>
+                        <a href="{{ route('view.dashboard') }}" class="card-link nav-link">
+                            <i class='bx bx-bar-chart-square arrow'></i>&nbsp;Sales:120 &nbsp;<i
+                                class='bx bx-chevrons-right arrow'></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-4 mb-3">

@@ -61,11 +61,15 @@ class PurchasePaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $payments = new PurchasePayment();
-        $payments->vendor_id = $request->vendor;
-        $payments->amount = $request->amount;
-        $payments->description = $request->description;
-        $payments->save();
+        $validator = Validator::make($request->all(), [
+            'vendor_id' => 'required',
+            'amount' => 'required',
+            'description' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        PurchasePayment::create($validator->validated());
         Session::flash('success', 'Purchase payment added');
         return redirect()
             ->route('purchase-payments.index');

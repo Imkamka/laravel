@@ -20,13 +20,15 @@
                     salePayments-url="{{ route('sale-payments.index') }}">
                     <thead>
                         <tr>
-                            <th>Customer</th>
+                            <th>Id</th>
+                            <th>Company</th>
                             <th>Amount</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

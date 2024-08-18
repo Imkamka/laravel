@@ -19,9 +19,9 @@
                     vendor-url="{{ route('vendors.index') }}">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email Address</th>
+                            <th>ID</th>
                             <th>Company</th>
+                            <th>Address</th>
                             <th>Action</th>
                         </tr>
                     </thead>

@@ -14,13 +14,19 @@ class SearchController extends Controller
     public function Search(Request $request)
     {
         $query = $request->get('query');
-        $results = Product::where('name', 'LIKE', "%{$query}%")->get(['id', 'name']);
+        $results = Product::where('is_deleted', 0)->where(function ($q) use ($query) {
+            $q->orWhere('name', 'LIKE', "%{$query}%");
+        })->get(['id', 'name']);
+
         return response()->json($results);
     }
     public function vendorSearchQuery(Request $request)
     {
         $searchQuery = $request->get('vendorQuery');
-        $results = Vendor::where('company', 'LIKE', "%{$searchQuery}%")->get(['id', 'company']);
+        $results = Vendor::where('is_deleted', 0)->where(function ($q) use ($searchQuery) {
+            $q->where('company', 'LIKE', "%{$searchQuery}%");
+        })->get(['id', 'company']);
+
         return response()->json($results);
     }
     public function purchaseSearchProduct(Request $request)
@@ -35,7 +41,9 @@ class SearchController extends Controller
     public function customerSearch(Request $request)
     {
         $searchQuery = $request->get('customerQuery');
-        $results = Customer::where('company', 'LIKE', "%{$searchQuery}%")->get(['id', 'company']);
+        $results = Customer::where('is_deleted', 0)->where(function ($q) use ($searchQuery) {
+            $q->where('company', 'LIKE', "%{$searchQuery}%");
+        })->get(['id', 'company']);
         return response()->json($results);
     }
 }

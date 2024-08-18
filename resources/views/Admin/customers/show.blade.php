@@ -1,7 +1,7 @@
 @extends('Admin.layout.app')
 @section('title', 'Customer info')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid shadow-lg rounded-3 p-5">
         <div class="row">
             <div class="col-auto me-auto mb-3">
                 <h3 class="page-title">
@@ -88,9 +88,9 @@
                 <h3>Reports</h3>
             </div>
         </div>
-        <div class="row">
+        <div class="row shadow p-4 rounded-3">
             <div class="col-lg-12">
-                <table class="table table-bordered p-4 w-100 report-table" id="customerReports"
+                <table class="table table-bordered p-4 w-100 report-table " id="customerReports"
                     customerReport-url="{{ route('customers.show', $customer) }}">
                     <thead>
                         <tr>

@@ -14,18 +14,20 @@
                     <div class="col-md-6 mb-3">
                         <label for="inputType" class="form-label">Vendor</label>
                         <select id="inputState"
-                            class="form-select @error('vendor')
+                            class="form-select @error('vendor_id')
                             is-invalid
                         @enderror"
-                            name="vendor">
+                            name="vendor_id">
                             <option selected disabled>Select Vendor</option>
                             @foreach ($vendors as $vendor)
                                 <option value="{{ $vendor->id }}"> {{ $vendor->company }} </option>
                             @endforeach
 
                         </select>
-                        @error('vendor')
-                            {{ $message }}
+                        @error('vendor_id')
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -34,9 +36,11 @@
                             class="form-control @error('amount')
                             is-invalid
                         @enderror"
-                            id="amount" name="amount" placeholder="Enter amount">
+                            id="amount" name="amount" placeholder="Enter amount" value="{{ old('amount') }}">
                         @error('amount')
-                            {{ $message }}
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -45,9 +49,11 @@
                             class="form-control @error('description')
                             is-invalid
                         @enderror"
-                            name="description" id="inputDescription4" placeholder="Enter description"></textarea>
+                            name="description" id="inputDescription4" placeholder="Enter description">{{ old('description') }}</textarea>
                         @error('description')
-                            {{ $message }}
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
 

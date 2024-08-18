@@ -18,14 +18,30 @@
             <div class="row w-100">
                 <form class="row g-3">
                     <div class="col-md-6 mb-3">
-                        <label for="inputProductName4" class="form-label">Full name</label>
+                        <label for="company" class="form-label">Company</label>
                         <input type="text"
+                            class="form-control @error('company')
+                            is-invalid
+                        @enderror"
+                            name="company" placeholder="Enter company name" value="{{ $customer->company }}">
+                        @error('company')
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="full_name" class="form-label">Full name</label>
+                        <input type="full_name"
                             class="form-control @error('full_name')
                             is-invalid
                         @enderror"
-                            name="full_name" placeholder="Enter full name" value="{{ $customer->full_name }}">
+                            name="full_name" id="full_name" placeholder="Enter full name "
+                            value="{{ $customer->full_name }}">
                         @error('full_name')
-                            {{ $message }}
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -36,7 +52,9 @@
                         @enderror"
                             name="email" id="email" placeholder="Enter email address" value="{{ $customer->email }}">
                         @error('email')
-                            {{ $message }}
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -47,35 +65,42 @@
                         @enderror"
                             name="phone" placeholder="Enter phone number" value="{{ $customer->phone }}">
                         @error('phone')
-                            {{ $message }}
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="address">Address</label>
-                        <textarea name="address" id="address" class="form-control">{{ $customer->address }}</textarea>
+                        <textarea name="address" id="address"
+                            class="form-control  @error('address')
+                            is-invalid
+                        @enderror"
+                            placeholder="Enter Address">{{ $customer->address }}</textarea>
+                        @error('address')
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="company">Company</label>
-                        <input type="text" name="company" id="company" class="form-control"
-                            value="{{ $customer->company }}">
-                    </div>
+
                     <div class="col-md-6 mb-3">
                         <label for="ntn">NTN</label>
-                        <input type="text" name="ntn" id="ntn" class="form-control"
-                            value="{{ $customer->ntn }}">
+                        <input type="text" name="ntn" id="ntn"
+                            class="form-control  @error('ntn')
+                            is-invalid
+                        @enderror"
+                            value="{{ $customer->ntn }}" placeholder="Enter ntn">
+                        @error('ntn')
+                            <p class="text-danger">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="inputType" class="form-label">Status</label>
-                        <select id="inputState" class="form-select " name="is_active">
-                            <option selected disabled>Status</option>
-                            <option value="1" {{ $customer->is_active == 1 ? 'selected' : '' }}> Active </option>
-                            <option value="0" {{ $customer->is_active == 0 ? 'selected' : '' }}>Inactive</option>
-                        </select>
 
-                    </div>
 
-                    <div class="col-12 mb-3 " id="submit-action">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                    <div class="col-12 mb-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
