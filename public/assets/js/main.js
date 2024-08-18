@@ -790,40 +790,41 @@ if (purchaseCheckout) {
 
 //Sweet alert message
 document.body.addEventListener('click', function (event) {
-    if (event.target && event.target.classList.contains('delete')) {
+    if (event.target && event.target.closest('.delete')) {
         event.preventDefault();
 
         const form = event.target.closest('form');
 
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger"
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
             },
             buttonsStyling: false
         });
 
         swalWithBootstrapButtons.fire({
-            title: "Are you sure?",
+            title: 'Are you sure?',
             text: "You won't be able to revert this!",
-            icon: "warning",
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 form.submit();
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 swalWithBootstrapButtons.fire({
-                    title: "Cancelled",
-                    text: "Your imaginary file is safe :)",
-                    icon: "error"
+                    title: 'Cancelled',
+                    text: 'Your data is safe :)',
+                    icon: 'error'
                 });
             }
         });
     }
 });
+
 
 $(document).ready(function () {
     // Initialize Dropify
