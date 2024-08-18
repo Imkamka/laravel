@@ -129,7 +129,6 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         $sale->is_deleted = 1;
-        $sale->delete_at = now();
         $sale->save();
         Session::flash('success', 'Sale deleted');
         return redirect()->route('sales.index');
