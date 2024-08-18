@@ -78,30 +78,7 @@
                     <a href="{{ route('expenses.report') }}" class="nav_link sublink">Expenses</a>
                 </ul>
             </li>
-            <li class="item mb-3">
-                <a href="#" class="nav_link">
-                    <span class="navlink_icon">
-                        <i class='bx bx-border-all'></i>
-                    </span>
-                    <span class="navlink">Product Stock</span>
-                </a>
-            </li>
-            <li class="item mb-3">
-                <a href="#" class="nav_link">
-                    <span class="navlink_icon">
-                        <i class='bx bx-cart-alt'></i>
-                    </span>
-                    <span class="navlink">My Cart</span>
-                </a>
-            </li>
-            <li class="item mb-3">
-                <a href="#" class="nav_link">
-                    <span class="navlink_icon">
-                        <i class='bx bx-bar-chart-square'></i>
-                    </span>
-                    <span class="navlink">Sales History</span>
-                </a>
-            </li>
+
         </ul>
         <ul class="menu_items">
             <hr>
