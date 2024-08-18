@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -59,12 +60,35 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'description' => 'required',
-            'type' => 'required'
+            'type' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        Product::create($validator->validated());
+        // Handle image upload
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('images/products', $imageName, 'public');
+
+            // Check for duplicates
+            $existingProduct = Product::where('image', $imageName)->first();
+            if ($existingProduct) {
+                // Delete the duplicate image file
+                Storage::disk('public')->delete($existingProduct->image);
+            }
+        }
+
+        // Create the product with the image path
+        Product::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'type' => $request->input('type'),
+            'image' => $imagePath,
+        ]);
         Session::flash('success', 'Product added');
         return redirect()
             ->route('products.index');

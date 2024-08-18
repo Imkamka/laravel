@@ -665,6 +665,24 @@ table thead tr th {
     width: 50%;
 }
 
+/* Center the Dropify input inside its column */
+.col-md-12 .dropify-wrapper {
+    width: 100%;
+    /* Set the width to take full available space */
+    max-width: 80%;
+    /* Limit the width to 80% of the column */
+    text-align: center;
+    /* Center the text inside */
+}
+
+/* Custom CSS for Dropify */
+.dropify-wrapper .dropify-message p,
+.dropify-wrapper .dropify-message span,
+.dropify-wrapper .dropify-infos .dropify-filename {
+    font-size: 12px;
+    /* Adjust the font size */
+}
+
 /* dashboard cards layout media query css  */
 @media screen and (max-width: 990px) {
     .row .d-card {

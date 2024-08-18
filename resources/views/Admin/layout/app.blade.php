@@ -24,6 +24,8 @@
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
 </head>
 
 <body>
@@ -34,8 +36,7 @@
     <div class="main-panel p-4 ">
         @yield('content')
     </div>
-    </div>
-    </div>
+
 
 
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -49,6 +50,7 @@
     {{-- Sweet alert & toastify alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js" defer></script>
 
     {{-- Alert message session  --}}
     @include('admin.includes.message')

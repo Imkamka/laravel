@@ -60,6 +60,7 @@ $(document).ready(function () {
     const vendorUrl = $('#vendors').attr('vendor-url');
     const purchaseUrl = $('#purchases').attr('purchase-url');
 
+    var baseUrl = $('#products').attr('baseUrl');
     $('#products').DataTable({
         processing: true,
         serverSide: true,
@@ -72,6 +73,18 @@ $(document).ready(function () {
                 searchable: false,
                 render: function (data, type, full, meta) {
                     return meta.row + 1 + meta.settings._iDisplayStart; // Calculate index based on page start
+                }
+            },
+            {
+                data: 'image',
+                name: 'image',
+                render: function (data, type, row) {
+                    if (data) {
+                        // Assuming 'data' contains the image path relative to the storage directory
+                        return '<img src="' + baseUrl + '/' + data + '" alt="Image" style="max-width: 40px; height: 40;" />';
+                    } else {
+                        return 'No image';
+                    }
                 }
             },
             { data: 'name', name: 'name' },
@@ -812,4 +825,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+});
+
+$(document).ready(function () {
+    // Initialize Dropify
+    $('.dropify').dropify();
 });

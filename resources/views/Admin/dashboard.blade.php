@@ -135,7 +135,8 @@
                         @if ($stockProducts->isNotEmpty())
                             @foreach ($stockProducts as $product)
                                 <tr>
-                                    <td>Product</td>
+                                    <td><img src="{{ asset('storage/' . $product->product->image) }}" alt="Product"
+                                            height="40" width="40"></td>
                                     <td>{{ $product->product->name }}</td>
                                     <td>{{ $product->product->type }}</td>
                                     <td>{{ $product->quantity }}</td>

@@ -15,18 +15,20 @@
         <div class="row p-5 shadow-lg rounded-3">
             <div class="col-lg-10 m-auto">
                 <table class="table table-bordered p-4 w-100 product-table" id="products"
-                    data-url="{{ route('products.index') }}">
-                    <thead>
+                    data-url="{{ route('products.index') }}" baseUrl="{{ asset('storage') }}">
+                    <thead class="text-center">
                         <tr>
                             <th>ID</th>
+                            <th>Product image</th>
                             <th>Product name</th>
                             <th>Description</th>
                             <th>Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
